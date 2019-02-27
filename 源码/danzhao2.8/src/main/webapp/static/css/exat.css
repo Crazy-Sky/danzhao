@@ -1,0 +1,24 @@
+.UE_Win{
+	width: 100%;
+	margin: 20px 0
+}
+.form_group span{
+	font-size: 20px;
+	height: 30px;
+	line-height: 30px;
+}
+.title{
+	position: relative;
+	margin-top:10px;
+	margin-bottom: 20px;
+}
+.answer{
+	margin-top:10px;
+	position: relative;
+}
+.type_win{
+	margin-bottom: 10px;
+}
+.saveBt{
+	text-align: center;
+}

@@ -1,0 +1,82 @@
+.login{
+	width: 100%;
+	height: 100%;
+	background:url(../images/login_pic.jpg);
+	background-repeat:no-repeat ;
+	background-size:100% 100%; 
+	background-attachment: fixed;
+}
+.logo{
+	width: 40%;
+	height: 85px;
+	position: absolute;  top: 30px; left: 50px; bottom: 0; right: 0;
+    background-repeat:no-repeat;
+}
+.default_form{
+	margin: auto;
+	position: absolute;  top: 0; left: 60%; bottom: 0; right: 0;
+	background: #fff;
+	width: 380px;
+	height: 420px;
+    /*filter:alpha(Opacity=40);-moz-opacity:0.4;opacity: 0.4;*/
+    color: #999;
+     
+}
+.default_form_user{
+	height: 320px;
+}
+.default_form > h2{
+	color: #1296db;
+	background-color: #eee;
+	padding: 5px;
+	text-align: center;
+}
+.default_form form{
+	width: 340px;
+	padding: 20px 20px 0 20px;
+}
+#btn_code{  
+    font-family: Arial;  
+    font-style: italic;  
+    font-weight: bold;  
+    border: 0;  
+    letter-spacing: 2px;  
+    color: blue;  
+}
+.forgotPwdBt_win a{
+	color: #000000;
+	float: right;
+}
+.resetTable{
+	width: 300px; 
+	height: 50px;
+	font-size: 18px;
+}
+.resetTable tr{
+	height: 70px;
+}
+.resetTable input{
+	font-size: 15px;
+}
+.resetTable input[name='phone']{
+	width: 220px;
+}
+.resetTable input[name='code']{
+	width: 150px;
+}
+.resetTable input[type='button'] , 
+.resetTable input[type='submit']{
+	font-size:15px;
+	width:140px;
+	height: 35px; 
+	border:0px;
+	line-height: 35px; 
+	padding:0px;
+	margin:0px;
+	background: #1296db;
+	border-radius:5px;
+	color: white;
+}
+.resetTable input[type='submit']{
+	width: 100%;
+}

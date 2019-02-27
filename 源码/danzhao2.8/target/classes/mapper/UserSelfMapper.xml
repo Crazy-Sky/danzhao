@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.danzhao.dao.UserMapper">
+ 
+  <resultMap id="userDtoResultMap" type="com.danzhao.dto.UserDto">
+    <id column="userId" jdbcType="INTEGER" property="userid" />
+    <result column="userName" jdbcType="VARCHAR" property="username" />
+    <result column="userPwd" jdbcType="VARCHAR" property="userpwd" />
+    <result column="userPhone" jdbcType="VARCHAR" property="userphone" />
+    <result column="userEmail" jdbcType="VARCHAR" property="useremail" />
+    <result column="userRole" jdbcType="INTEGER" property="userrole" />
+    <result column="roleName" jdbcType="VARCHAR" property="rolename" />
+    <result column="deptid" jdbcType="INTEGER" property="deptid" />
+    <result column="deptName" jdbcType="VARCHAR" property="deptname" />
+    <result column="erid" jdbcType="INTEGER" property="erid" />
+    <result column="erName" jdbcType="VARCHAR" property="ername" />
+    <result column="isGrade" jdbcType="INTEGER" property="isgrade" />
+  </resultMap>
+ 
+ <sql id="UserDtoExample_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+ 
+  <sql id="userDto_Column_List">
+    u.*,r.roleName roleName, d.deptName deptName, er.erName erName
+  </sql>
+ 
+ <select id="selectDtoByExample" parameterType="com.danzhao.bean.UserExample" resultMap="userDtoResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="userDto_Column_List" />
+    from d_user u
+	LEFT JOIN d_role r
+	ON u.userRole = r.roleId
+	LEFT JOIN d_department d
+	ON u.deptid = d.deptId
+	LEFT JOIN d_examroom er
+	ON u.erid = er.erId
+    <if test="_parameter != null">
+      <include refid="UserDtoExample_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+ 
+  <!-- 根据邮箱修改密码 -->
+  <update id="updatePwdByEmail" parameterType="com.danzhao.bean.User">
+    update d_user
+    set userPwd = #{userpwd,jdbcType=VARCHAR}
+    where userEmail = #{useremail,jdbcType=VARCHAR}
+  </update>
+  
+  <!-- 查询dto -->
+  <select id="selectOneDto" parameterType="java.lang.Integer" resultMap="userDtoResultMap">		
+  	select 
+  	<include refid="userDto_Column_List" />
+  	from d_user u
+	LEFT JOIN d_role r
+	ON u.userRole = r.roleId
+	LEFT JOIN d_department d
+	ON u.deptid = d.deptId
+	LEFT JOIN d_examroom er
+	ON u.erid = er.erId
+  	where u.userId = #{userid,jdbcType=INTEGER}
+  </select>
+  
+  <!-- 按系部 -->
+  <select id="selectDtos" parameterType="java.lang.Integer" resultMap="userDtoResultMap">     
+    select 
+    <include refid="userDto_Column_List" />
+    from d_user u
+    LEFT JOIN d_role r
+    ON u.userRole = r.roleId
+    LEFT JOIN d_department d
+    ON u.deptid = d.deptId
+    LEFT JOIN d_examroom er
+    ON u.erid = er.erId
+    where u.deptid = #{deptid,jdbcType=INTEGER}
+  </select>
+  
+  <!-- 按系部、角色 -->
+  <select id="selectDtosByRole" parameterType="com.danzhao.bean.User" resultMap="userDtoResultMap">     
+    select 
+    <include refid="userDto_Column_List" />
+    from d_user u
+    LEFT JOIN d_role r
+    ON u.userRole = r.roleId
+    LEFT JOIN d_department d
+    ON u.deptid = d.deptId
+    LEFT JOIN d_examroom er
+    ON u.erid = er.erId
+    where u.userRole = #{userrole,jdbcType=INTEGER}
+    <if test="deptid != null">
+      and u.deptid = #{deptid,jdbcType=INTEGER}
+    </if>
+    
+  </select>
+  
+  <!-- 按系部、角色3-6 -->
+  <select id="selectAllExaminer" parameterType="java.lang.Integer" resultMap="userDtoResultMap">     
+    select 
+    <include refid="userDto_Column_List" />
+    from d_user u
+    LEFT JOIN d_role r
+    ON u.userRole = r.roleId
+    LEFT JOIN d_department d
+    ON u.deptid = d.deptId
+    LEFT JOIN d_examroom er
+    ON u.erid = er.erId
+    where u.deptid = #{deptid,jdbcType=INTEGER}
+    and u.userRole &gt;= 3
+    and u.userRole &lt;= 6
+  </select>
+  
+  <!-- 查询dtos -->
+  <!-- <select id="selectDtosByRole" parameterType="java.lang.Integer" resultMap="userDtoResultMap">		
+  	select 
+  	<include refid="userDto_Column_List" />
+  	from d_user u
+	LEFT JOIN d_role r
+	ON u.userRole = r.roleId
+	LEFT JOIN d_department d
+	ON u.deptid = d.deptId
+	LEFT JOIN d_examroom er
+	ON u.erid = er.erId
+  	where u.userRole = #{userid,jdbcType=INTEGER}
+  </select> -->
+  
+</mapper>

@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.danzhao.dao.ExaminerGradeMapper">
+  <resultMap id="GradeDtoResultMap" type="com.danzhao.dto.ExaminerGradeDto">
+    <id column="examinerGardeId" jdbcType="INTEGER" property="examinergardeid" />
+    <result column="examinerId" jdbcType="INTEGER" property="examinerid" />
+    <result column="examinerName" jdbcType="VARCHAR" property="examinername" />
+    <result column="roleName" jdbcType="VARCHAR" property="rolename" />
+    <result column="stuid" jdbcType="INTEGER" property="stuid" />
+    <result column="Result" jdbcType="VARCHAR" property="result" />
+    <result column="score" jdbcType="REAL" property="score" />
+  </resultMap>
+  <sql id="GradeDtoExample_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  
+  <sql id="GradeDtoBase_Column_List">
+    eg.*, u.userName examinerName, r.roleName
+  </sql>
+  <select id="selectGradeDtoByExample" parameterType="com.danzhao.bean.ExaminerGradeExample" resultMap="GradeDtoResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="GradeDtoBase_Column_List" />
+    from d_examinergrade eg
+    left join d_user u
+    on eg.examinerId = u.userId
+    left join d_role r
+    on u.userRole = r.roleId
+    <if test="_parameter != null">
+      <include refid="GradeDtoExample_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  
+  <select id="selectGradeDtoByExaminerId" parameterType="java.lang.Integer" resultMap="GradeDtoResultMap">
+    select
+    <include refid="GradeDtoBase_Column_List" />
+    from d_examinergrade eg
+    left join d_user u
+    on eg.examinerId = u.userId
+    left join d_role r
+    on u.userRole = r.roleId
+    where eg.examinerId = #{examinerid, jdbcType=INTEGER}
+  </select>
+  
+</mapper>

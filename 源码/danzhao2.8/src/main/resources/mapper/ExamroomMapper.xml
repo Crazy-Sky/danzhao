@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.danzhao.dao.ExamroomMapper">
+  <resultMap id="BaseResultMap" type="com.danzhao.bean.Examroom">
+    <id column="erId" jdbcType="INTEGER" property="erid" />
+    <result column="erName" jdbcType="VARCHAR" property="ername" />
+    <result column="erType" jdbcType="INTEGER" property="ertype" />
+    <result column="deptid" jdbcType="INTEGER" property="deptid" />
+    <result column="proflist" jdbcType="VARCHAR" property="proflist" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    erId, erName, erType, deptid, proflist
+  </sql>
+  <select id="selectByExample" parameterType="com.danzhao.bean.ExamroomExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from d_examroom
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from d_examroom
+    where erId = #{erid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from d_examroom
+    where erId = #{erid,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.danzhao.bean.ExamroomExample">
+    delete from d_examroom
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.danzhao.bean.Examroom">
+    insert into d_examroom (erId, erName, erType, 
+      deptid, proflist)
+    values (#{erid,jdbcType=INTEGER}, #{ername,jdbcType=VARCHAR}, #{ertype,jdbcType=INTEGER}, 
+      #{deptid,jdbcType=INTEGER}, #{proflist,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.danzhao.bean.Examroom">
+    insert into d_examroom
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="erid != null">
+        erId,
+      </if>
+      <if test="ername != null">
+        erName,
+      </if>
+      <if test="ertype != null">
+        erType,
+      </if>
+      <if test="deptid != null">
+        deptid,
+      </if>
+      <if test="proflist != null">
+        proflist,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="erid != null">
+        #{erid,jdbcType=INTEGER},
+      </if>
+      <if test="ername != null">
+        #{ername,jdbcType=VARCHAR},
+      </if>
+      <if test="ertype != null">
+        #{ertype,jdbcType=INTEGER},
+      </if>
+      <if test="deptid != null">
+        #{deptid,jdbcType=INTEGER},
+      </if>
+      <if test="proflist != null">
+        #{proflist,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.danzhao.bean.ExamroomExample" resultType="java.lang.Long">
+    select count(*) from d_examroom
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update d_examroom
+    <set>
+      <if test="record.erid != null">
+        erId = #{record.erid,jdbcType=INTEGER},
+      </if>
+      <if test="record.ername != null">
+        erName = #{record.ername,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ertype != null">
+        erType = #{record.ertype,jdbcType=INTEGER},
+      </if>
+      <if test="record.deptid != null">
+        deptid = #{record.deptid,jdbcType=INTEGER},
+      </if>
+      <if test="record.proflist != null">
+        proflist = #{record.proflist,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update d_examroom
+    set erId = #{record.erid,jdbcType=INTEGER},
+      erName = #{record.ername,jdbcType=VARCHAR},
+      erType = #{record.ertype,jdbcType=INTEGER},
+      deptid = #{record.deptid,jdbcType=INTEGER},
+      proflist = #{record.proflist,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.danzhao.bean.Examroom">
+    update d_examroom
+    <set>
+      <if test="ername != null">
+        erName = #{ername,jdbcType=VARCHAR},
+      </if>
+      <if test="ertype != null">
+        erType = #{ertype,jdbcType=INTEGER},
+      </if>
+      <if test="deptid != null">
+        deptid = #{deptid,jdbcType=INTEGER},
+      </if>
+      <if test="proflist != null">
+        proflist = #{proflist,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where erId = #{erid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.danzhao.bean.Examroom">
+    update d_examroom
+    set erName = #{ername,jdbcType=VARCHAR},
+      erType = #{ertype,jdbcType=INTEGER},
+      deptid = #{deptid,jdbcType=INTEGER},
+      proflist = #{proflist,jdbcType=VARCHAR}
+    where erId = #{erid,jdbcType=INTEGER}
+  </update>
+</mapper>

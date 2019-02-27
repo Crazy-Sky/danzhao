@@ -1,0 +1,268 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.danzhao.dao.ExaminationMapper">
+  <resultMap id="BaseResultMap" type="com.danzhao.bean.Examination">
+    <id column="exatId" jdbcType="INTEGER" property="exatid" />
+    <result column="exatSimpleContent" jdbcType="VARCHAR" property="exatsimplecontent" />
+    <result column="exatType" jdbcType="INTEGER" property="exattype" />
+    <result column="deptid" jdbcType="INTEGER" property="deptid" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.danzhao.bean.ExaminationWithBLOBs">
+    <result column="exatContent" jdbcType="LONGVARCHAR" property="exatcontent" />
+    <result column="exatAnswer" jdbcType="LONGVARCHAR" property="exatanswer" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    exatId, exatSimpleContent, exatType, deptid
+  </sql>
+  <sql id="Blob_Column_List">
+    exatContent, exatAnswer
+  </sql>
+  <select id="selectByExampleWithBLOBs" parameterType="com.danzhao.bean.ExaminationExample" resultMap="ResultMapWithBLOBs">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from d_examination
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" parameterType="com.danzhao.bean.ExaminationExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from d_examination
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from d_examination
+    where exatId = #{exatid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from d_examination
+    where exatId = #{exatid,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.danzhao.bean.ExaminationExample">
+    delete from d_examination
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.danzhao.bean.ExaminationWithBLOBs">
+    insert into d_examination (exatId, exatSimpleContent, exatType, 
+      deptid, exatContent, exatAnswer
+      )
+    values (#{exatid,jdbcType=INTEGER}, #{exatsimplecontent,jdbcType=VARCHAR}, #{exattype,jdbcType=INTEGER}, 
+      #{deptid,jdbcType=INTEGER}, #{exatcontent,jdbcType=LONGVARCHAR}, #{exatanswer,jdbcType=LONGVARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.danzhao.bean.ExaminationWithBLOBs">
+    insert into d_examination
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="exatid != null">
+        exatId,
+      </if>
+      <if test="exatsimplecontent != null">
+        exatSimpleContent,
+      </if>
+      <if test="exattype != null">
+        exatType,
+      </if>
+      <if test="deptid != null">
+        deptid,
+      </if>
+      <if test="exatcontent != null">
+        exatContent,
+      </if>
+      <if test="exatanswer != null">
+        exatAnswer,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="exatid != null">
+        #{exatid,jdbcType=INTEGER},
+      </if>
+      <if test="exatsimplecontent != null">
+        #{exatsimplecontent,jdbcType=VARCHAR},
+      </if>
+      <if test="exattype != null">
+        #{exattype,jdbcType=INTEGER},
+      </if>
+      <if test="deptid != null">
+        #{deptid,jdbcType=INTEGER},
+      </if>
+      <if test="exatcontent != null">
+        #{exatcontent,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="exatanswer != null">
+        #{exatanswer,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.danzhao.bean.ExaminationExample" resultType="java.lang.Long">
+    select count(*) from d_examination
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update d_examination
+    <set>
+      <if test="record.exatid != null">
+        exatId = #{record.exatid,jdbcType=INTEGER},
+      </if>
+      <if test="record.exatsimplecontent != null">
+        exatSimpleContent = #{record.exatsimplecontent,jdbcType=VARCHAR},
+      </if>
+      <if test="record.exattype != null">
+        exatType = #{record.exattype,jdbcType=INTEGER},
+      </if>
+      <if test="record.deptid != null">
+        deptid = #{record.deptid,jdbcType=INTEGER},
+      </if>
+      <if test="record.exatcontent != null">
+        exatContent = #{record.exatcontent,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="record.exatanswer != null">
+        exatAnswer = #{record.exatanswer,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map">
+    update d_examination
+    set exatId = #{record.exatid,jdbcType=INTEGER},
+      exatSimpleContent = #{record.exatsimplecontent,jdbcType=VARCHAR},
+      exatType = #{record.exattype,jdbcType=INTEGER},
+      deptid = #{record.deptid,jdbcType=INTEGER},
+      exatContent = #{record.exatcontent,jdbcType=LONGVARCHAR},
+      exatAnswer = #{record.exatanswer,jdbcType=LONGVARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update d_examination
+    set exatId = #{record.exatid,jdbcType=INTEGER},
+      exatSimpleContent = #{record.exatsimplecontent,jdbcType=VARCHAR},
+      exatType = #{record.exattype,jdbcType=INTEGER},
+      deptid = #{record.deptid,jdbcType=INTEGER}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.danzhao.bean.ExaminationWithBLOBs">
+    update d_examination
+    <set>
+      <if test="exatsimplecontent != null">
+        exatSimpleContent = #{exatsimplecontent,jdbcType=VARCHAR},
+      </if>
+      <if test="exattype != null">
+        exatType = #{exattype,jdbcType=INTEGER},
+      </if>
+      <if test="deptid != null">
+        deptid = #{deptid,jdbcType=INTEGER},
+      </if>
+      <if test="exatcontent != null">
+        exatContent = #{exatcontent,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="exatanswer != null">
+        exatAnswer = #{exatanswer,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where exatId = #{exatid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.danzhao.bean.ExaminationWithBLOBs">
+    update d_examination
+    set exatSimpleContent = #{exatsimplecontent,jdbcType=VARCHAR},
+      exatType = #{exattype,jdbcType=INTEGER},
+      deptid = #{deptid,jdbcType=INTEGER},
+      exatContent = #{exatcontent,jdbcType=LONGVARCHAR},
+      exatAnswer = #{exatanswer,jdbcType=LONGVARCHAR}
+    where exatId = #{exatid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.danzhao.bean.Examination">
+    update d_examination
+    set exatSimpleContent = #{exatsimplecontent,jdbcType=VARCHAR},
+      exatType = #{exattype,jdbcType=INTEGER},
+      deptid = #{deptid,jdbcType=INTEGER}
+    where exatId = #{exatid,jdbcType=INTEGER}
+  </update>
+</mapper>

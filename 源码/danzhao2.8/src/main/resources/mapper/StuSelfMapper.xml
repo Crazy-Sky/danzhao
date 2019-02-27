@@ -1,0 +1,238 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.danzhao.dao.StudentMapper">
+  <!-- StudentInfoDto返回结果集 -->
+  <resultMap id="StudentInfoDtoResultMap" type="com.danzhao.dto.StuInfoDto">
+    <id column="stuId" jdbcType="INTEGER" property="stuid" />
+    <result column="stuNumber" jdbcType="VARCHAR" property="stunumber" />
+    <result column="stuName" jdbcType="VARCHAR" property="stuname" />
+    <result column="stuSex" jdbcType="VARCHAR" property="stusex" />
+    <result column="stuTel1" jdbcType="VARCHAR" property="stutel1" />
+    <result column="stuTel2" jdbcType="VARCHAR" property="stutel2" />
+    <result column="stuTel3" jdbcType="VARCHAR" property="stutel3" />
+    <result column="kType" jdbcType="VARCHAR" property="ktype" />
+    <result column="zgType" jdbcType="VARCHAR" property="zgtype" />
+    <result column="schoolName" jdbcType="VARCHAR" property="schoolname" />
+    <result column="stuStatus" jdbcType="INTEGER" property="stustatus" />
+    <result property="deptid" column="deptId" jdbcType="INTEGER"/>
+ 	<result property="deptname" column="deptName" jdbcType="VARCHAR"/>
+ 	<result column="profClass" jdbcType="VARCHAR" property="profclass" />
+   	<result property="profid" column="profId" jdbcType="INTEGER"/>
+	<result property="profname" column="profName" jdbcType="VARCHAR"/>
+   	<result property="erid" column="erId" jdbcType="INTEGER"/>
+	<result property="ername" column="erName" jdbcType="VARCHAR"/>
+    <result column="stuPwd" jdbcType="VARCHAR" property="stupwd" />
+    <result column="examNumber" jdbcType="VARCHAR" property="examnumber" />
+    <result column="IDCard" jdbcType="VARCHAR" property="idcard" />
+    <result column="roleId" jdbcType="INTEGER" property="roleid" />
+    <result column="testTime" jdbcType="VARCHAR" property="testtime" />
+    <result column="totalscore" jdbcType="REAL" property="totalscore" />
+  </resultMap>
+  
+  <!-- stuAllInfoDto返回结果集 -->
+  <resultMap id="StuAllInfoDtoResultMap" type="com.danzhao.dto.StuAllInfoDto">
+    <id column="stuId" jdbcType="INTEGER" property="stuid" />
+    <result column="stuNumber" jdbcType="VARCHAR" property="stunumber" />
+    <result column="stuName" jdbcType="VARCHAR" property="stuname" />
+    <result column="stuSex" jdbcType="VARCHAR" property="stusex" />
+    <result column="stuTel1" jdbcType="VARCHAR" property="stutel1" />
+    <result column="stuTel2" jdbcType="VARCHAR" property="stutel2" />
+    <result column="stuTel3" jdbcType="VARCHAR" property="stutel3" />
+    <result column="kType" jdbcType="VARCHAR" property="ktype" />
+    <result column="zgType" jdbcType="VARCHAR" property="zgtype" />
+    <result column="schoolName" jdbcType="VARCHAR" property="schoolname" />
+    <result column="stuStatus" jdbcType="INTEGER" property="stustatus" />
+    <result column="deptId" jdbcType="INTEGER" property="deptid" />
+    <result property="deptname" column="deptName" jdbcType="VARCHAR"/>
+    <result column="profClass" jdbcType="VARCHAR" property="profclass" />
+    <result column="profId" jdbcType="INTEGER" property="profid" />
+    <result property="profid" column="profId" jdbcType="INTEGER"/>
+    <result column="stuPwd" jdbcType="VARCHAR" property="stupwd" />
+    <result column="examNumber" jdbcType="VARCHAR" property="examnumber" />
+    <result column="IDCard" jdbcType="VARCHAR" property="idcard" />
+    <result column="erId" jdbcType="INTEGER" property="erid" />
+    <result property="ername" column="erName" jdbcType="VARCHAR"/>
+    <result column="testTime" jdbcType="VARCHAR" property="testtime" />
+    <result column="teststarttime" jdbcType="TIMESTAMP" property="teststarttime" />
+    <result column="testendtime" jdbcType="TIMESTAMP" property="testendtime" />
+    <result column="exatId" jdbcType="INTEGER" property="exatid" />
+    <result property="exatsimplecontent" column="exatSimpleContent" jdbcType="VARCHAR"/>
+    <result column="exatid2" jdbcType="INTEGER" property="exatid2" />
+    <result property="exatsimplecontent2" column="exatSimpleContent2" jdbcType="VARCHAR"/>
+    <result column="totalscore" jdbcType="REAL" property="totalscore" />
+    <result column="roleId" jdbcType="INTEGER" property="roleid" />
+    <!-- <result column="eh" jdbcType="INTEGER" property="eh" /> -->
+  </resultMap>
+  
+  
+  <sql id="StuDto_Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  
+  <!-- studentInfoDto返回集 -->
+  <sql id="StudentInfo_Column_List">
+    s.stuId, s.stuNumber, s.stuName, s.stuSex, s.stuTel1, s.stuTel2, s.stuTel3, s.kType, s.zgType, s.schoolName, 
+    s.stuStatus,s.totalscore,
+    d.deptId, d.deptName, d.profclass, p.profId, p.profName, s.stuPwd, s.examNumber, s.IDCard, e.erId, e.erName,s.testTime
+  </sql>
+  
+  <!-- StuAllInfoDto返回集 -->
+  <sql id="StuAllInfoDto_Column_List">
+    s.*,et.exatSimpleContent,et2.exatSimpleContent exatSimpleContent2,d.deptName, d.profclass, p.profName,e.erName
+  </sql>
+  
+  <!-- 查询StudentInfoDto -->
+  <select id="selectStudentInfoDtoByExample" parameterType="com.danzhao.bean.StudentExample" resultMap="StudentInfoDtoResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="StudentInfo_Column_List" />
+    from d_student s
+    left join d_department d
+    on s.deptid = d.deptId 
+    left join d_profession p
+    on s.profid = p.profId
+    left join d_examroom e
+    on s.erid = e.erId
+    <if test="_parameter != null">
+      <include refid="StuDto_Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  
+   <!-- 根据系部按姓名或者专业模糊查询获取学生 -->
+  <select id="selectStusByDeptAndNameOrProf" parameterType="com.danzhao.dto.StuInfoDto" resultMap="StudentInfoDtoResultMap">
+    select
+    <include refid="StudentInfo_Column_List" />
+    from d_student s
+    left join d_department d
+    on s.deptid = d.deptId 
+    left join d_profession p
+    on s.profid = p.profId
+    left join d_examroom e
+    on s.erid = e.erId
+   	where s.deptid = #{deptid,jdbcType=INTEGER}
+   	<if test="stuname != null">
+    	and s.stuName like CONCAT('%',#{stuname},'%')
+    </if>
+    <if test="profname != null">
+    	and p.profName like CONCAT('%',#{profname},'%')
+    </if>
+  </select>
+  
+  <!-- 根据专业获取某状态(如:正在被呼叫)的学生 -->
+  <select id="selectStusByProfIdAndState" parameterType="com.danzhao.bean.Student" resultMap="StudentInfoDtoResultMap">
+    select
+    <include refid="StudentInfo_Column_List" />
+    from d_student s
+    left join d_department d
+    on s.deptid = d.deptId 
+    left join d_profession p
+    on s.profid = p.profId
+    left join d_examroom e
+    on s.erid = e.erId
+   	where s.profid = #{profid,jdbcType=INTEGER} 
+   	and s.stuStatus = #{stustatus,jdbcType=INTEGER}
+  </select>
+  
+  
+  
+  <!-- 根据考场获取某状态、某考试时间段(如：上午正在被呼叫)的学生 -->
+  <select id="selectStusByErIdAndState" parameterType="com.danzhao.bean.Student" resultMap="StudentInfoDtoResultMap">
+    select
+    <include refid="StudentInfo_Column_List" />
+    from d_student s
+    left join d_department d
+    on s.deptid = d.deptId 
+    left join d_profession p
+    on s.profid = p.profId
+    left join d_examroom e
+    on s.erid = e.erId
+   	where s.erid = #{erid,jdbcType=INTEGER}
+   	<if test="testtime != null">
+    	and s.testTime = #{testtime,jdbcType=INTEGER}
+    </if>
+   	and s.stuStatus = #{stustatus,jdbcType=INTEGER} 
+   	
+  </select>
+  
+  <!-- 根据考场获取某状态范围、某考试时间段(如：上午候考、被呼叫的、考试的)的学生 -->
+  <select id="selectStusByShowStuDto" parameterType="com.danzhao.dto.ShowStuDto" resultMap="StudentInfoDtoResultMap">
+    select
+    <include refid="StudentInfo_Column_List" />
+    from d_student s
+    left join d_department d
+    on s.deptid = d.deptId 
+    left join d_profession p
+    on s.profid = p.profId
+    left join d_examroom e
+    on s.erid = e.erId
+   	where s.erid = #{erid,jdbcType=INTEGER} 
+   	and s.stuStatus &gt;= #{beginState,jdbcType=INTEGER}
+   	and s.stuStatus &lt;= #{endState,jdbcType=INTEGER}
+   	and s.testTime = #{testtime,jdbcType=INTEGER}
+  </select>
+  
+  <!-- 根据考场获取可评分的学生 -->
+  <select id="selectExamingStuByEr" parameterType="com.danzhao.bean.Student" resultMap="StudentInfoDtoResultMap">
+    select
+    <include refid="StudentInfo_Column_List" />
+    from d_student s
+    left join d_department d
+    on s.deptid = d.deptId 
+    left join d_profession p
+    on s.profid = p.profId
+    left join d_examroom e
+    on s.erid = e.erId
+   	where s.erid = #{erid,jdbcType=INTEGER} 
+   	and s.stuStatus = 2 or s.stuStatus = 3
+  </select>
+  
+  <!-- 根据id查询单个stuAllInfoDto -->
+  <select id="selectStuAllInfoDtoById" parameterType="java.lang.Integer" resultMap="StuAllInfoDtoResultMap">
+    select
+    <include refid="StuAllInfoDto_Column_List" />
+    from d_student s
+	left join d_department d
+	on s.deptid = d.deptId
+	left join d_profession p
+	on s.profid = p.profId
+	left join d_examroom e
+	on s.erid = e.erId
+	LEFT JOIN d_examination et
+	ON s.exatid = et.exatId
+	LEFT JOIN d_examination et2
+	on s.exatid2 = et2.exatId
+   	where stuId = #{stuid,jdbcType=INTEGER}
+  </select>
+  
+</mapper>

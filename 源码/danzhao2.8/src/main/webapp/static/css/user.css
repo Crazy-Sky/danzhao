@@ -1,0 +1,265 @@
+/**
+ * Author: zsx;
+ * Date: 2018-9-7;
+ */
+
+/***** 1. GENERAL STYLES *****/
+/*****************************/
+
+
+body { 
+	font-size: 12px; 
+	font-family: "Helvetica Neue", Arial, Helvetica, sans-serif; 
+	color: #666; 
+	line-height: 21px; 
+}
+input, select, textarea, button { 
+	font-size: 12px; 
+	font-family: "Helvetica Neue", Arial, Helvetica, sans-serif; 
+	outline: none; 
+	margin: 0; 
+}
+a { 
+	text-decoration: none; 
+	color: #666; 
+	outline: none; 
+}
+a img { 
+	border: 0; 
+}
+body.withvernav { 
+	background: #fff url(../images/line.ccc.png) repeat-y 230px 0; 
+} 
+body.withmenucoll2 { 
+	background-position: 35px 0; 
+}
+
+/***** 2. CONTAINER STYLES *****/
+/*****************************/
+
+.container{
+	width: 100%;
+	min-width: 1024px;
+}
+
+
+/***** 3. HEADER STYLES *****/
+/*****************************/
+
+.header{
+	background: #1296db;
+    padding: 8px 10px;
+    position: relative;
+    border-bottom: 1px solid #1296db;
+}
+.header .header_left{
+	margin: 10px 0;
+	color: #fff;
+}
+.header .header_left img{
+	width: 484px;
+	float: left;
+}
+.header .header_rigth{
+	position: absolute;
+	font-size: 16px;
+    top: 18px;
+    right: 20px;
+    line-height: 45px;
+    color: #fff;
+}
+.header .header_rigth a{
+	color: #ccc;
+}
+
+/***** 4. SIDE_NAV STYLES *****/
+/*****************************/
+
+.side_nav{
+	position: absolute;
+    left: 0;
+	width: 230px;
+}
+.side_nav ul li{
+	display: block;
+	cursor: pointer;
+    border-bottom: 1px solid #eee;
+    position: relative;
+}
+.side_nav ul li a{
+	display: block;
+    padding: 9px 10px;
+    background: #fff;
+    color: #1296db;
+    text-transform: uppercase;
+}
+.side_nav ul li a:hover {
+    background-color: #fcfcfc;
+}
+.side_nav ul li a .text{
+	padding-left: 10px;
+}
+.side_nav ul li span.arrow {
+    position: absolute;
+    top: 17px;
+    right: 10px;
+    background: url(../images/menuarrow.png) no-repeat 0 0;
+    width: 11px;
+    height: 4px;
+}
+.side_nav ul ul{
+	display: none;
+    padding-left: 40px;
+    border-top: 1px solid #eee;
+}
+.side_nav ul ul li {
+    border-bottom: 0;
+}
+.side_nav ul ul li a{
+	color: #999;
+    background: #fff url(../images/line.dashed.png) no-repeat -25px center;
+	border-left: 1px dashed #ccc;
+    padding-left: 10px;
+}
+.side_nav ul ul li a:hover{
+	background-color: #fff;
+	color: #666;
+}
+.menucoll2 { 
+	width: 35px; 
+}
+.menucoll2 ul li { 
+	height: 36px; 
+	position: relative; 
+}
+.menucoll2 span.text{ 
+	display:none;
+}
+.menucoll2 ul li span.arrow { 
+	display: none; 
+}
+.menucoll2 > ul > li.hover > a { 
+	background-color: #f7f7f7; 
+}
+.menucoll2 ul ul { 
+	position: absolute; 
+	z-index: 100; 
+	top: 0; 
+	left: 35px;
+	padding: 0; 
+	width: 200px; 
+	background: none; 
+	border: 1px solid #ccc; 
+	-moz-box-shadow: 1px 1px 3px rgba(0,0,0,0.1); 
+	-webkit-box-shadow: 1px 1px 3px rgba(0,0,0,0.1); 
+	box-shadow: 2px 1px 3px rgba(0,0,0,0.1);
+}
+.menucoll2 ul ul li { 
+	display: block; 
+	height: auto; 
+}
+.menucoll2 ul ul li a { 
+	background-image: none; border-left: 0; 
+	height: auto; 
+	padding: 11px 10px 10px 10px; 
+}
+.menucoll2 ul ul span { 
+	background: #f7f7f7; 
+	font-weight: bold; 
+	display: block; 
+	padding: 9px 10px 10px 10px; 
+	text-transform: uppercase;
+}
+.menucoll2 ul li.current ul { 
+	display: none; 
+}
+.menucoll2 ul li.current ul span { 
+	color: #FB9337; 
+}
+.togglemenu { 
+	border-left: 1px solid #ddd; 
+	border-right: 1px solid #ddd; display: block; 
+	height: 21px; 
+	cursor: pointer;
+	background: url(../images/menucollapsed.png) no-repeat center 0; 
+	margin: 10px;
+}
+.togglemenu_collapsed { 
+	background-position: center -21px; 
+	margin: 10px 5px; 
+	border-width: 0; 
+}
+
+/***** 5. CONTERCONTENT STYLES *****/
+/*****************************/
+
+.centercontent{
+	margin-left: 231px;
+	height: calc(100% - 140px);
+}
+.pageheader{
+    padding-bottom: 20px;
+	padding-top: 20px;
+    background: url(../images/noise.white.png);
+    position: relative;
+}
+.pagetitle{
+	margin: 0 20px 10px 20px;
+	color: #485b79;
+    font-weight: normal;
+    font-size: 28px;
+}
+.pagedesc{
+	margin: 0 20px;
+	color: #666;
+}
+
+/***** 6. CONTENTWRAPPER STYLES *****/
+/*****************************/
+.withmenucoll2 .centercontent { 
+	margin-left: 36px; 
+}
+.contentwrapper{
+    padding: 20px;
+    line-height: 21px;
+}
+.contentwrapper input[type=text],
+.contentwrapper input[type=password],
+.contentwrapper input[type=button],
+.contentwrapper select{
+	width: 120px;	
+	margin-right: 15px;
+}
+.table_notborder{
+	border: 0px;
+}
+.table_notborder tr td{
+	border: 0px;
+}
+.showExat{
+	width: 100%;
+    margin-top: 5px;
+    padding: 10px;
+    border: 1px solid #eee;
+}
+.andioController{
+	width:300px;
+	height:80px;
+	float: right;
+}
+.andioController div{
+	float: left;
+	width: 80px;
+	height: 35px;
+	line-height:35px;
+	background: #1296DB;
+	margin-left: 15px;
+	text-align: center;
+	border-radius: 5px;
+	cursor:pointer;
+}
+.andioController span{
+	font-size: 15px;
+	color: white;
+	
+}

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.danzhao.dao.ExaminationMapper">
+  <!-- 根据系部、考题类型随机获取一个考题 -->
+  <select id="randomExat" parameterType="com.danzhao.bean.Examination" resultType="java.lang.Integer">
+    select t1.exatId
+  	FROM d_examination AS t1 JOIN 
+	(SELECT ROUND(RAND() * ((SELECT MAX(exatId) 
+	FROM d_examination)-(SELECT MIN(exatId) 
+	FROM d_examination))+(SELECT MIN(exatId) 
+	FROM d_examination)) AS id) AS t2
+	WHERE t1.exatId >= t2.id 
+	and t1.exatType = #{exattype,jdbcType=INTEGER}  
+	and t1.deptid = #{deptid,jdbcType=INTEGER}
+	ORDER BY t1.exatId LIMIT 1;
+	</select>
+</mapper>

@@ -1,0 +1,527 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.danzhao.dao.StudentMapper">
+  <resultMap id="BaseResultMap" type="com.danzhao.bean.Student">
+    <id column="stuId" jdbcType="INTEGER" property="stuid" />
+    <result column="stuNumber" jdbcType="VARCHAR" property="stunumber" />
+    <result column="stuName" jdbcType="VARCHAR" property="stuname" />
+    <result column="stuSex" jdbcType="VARCHAR" property="stusex" />
+    <result column="stuTel1" jdbcType="VARCHAR" property="stutel1" />
+    <result column="stuTel2" jdbcType="VARCHAR" property="stutel2" />
+    <result column="stuTel3" jdbcType="VARCHAR" property="stutel3" />
+    <result column="kType" jdbcType="VARCHAR" property="ktype" />
+    <result column="zgType" jdbcType="VARCHAR" property="zgtype" />
+    <result column="schoolName" jdbcType="VARCHAR" property="schoolname" />
+    <result column="stuStatus" jdbcType="INTEGER" property="stustatus" />
+    <result column="deptid" jdbcType="INTEGER" property="deptid" />
+    <result column="profid" jdbcType="INTEGER" property="profid" />
+    <result column="stuPwd" jdbcType="VARCHAR" property="stupwd" />
+    <result column="examNumber" jdbcType="VARCHAR" property="examnumber" />
+    <result column="IDCard" jdbcType="VARCHAR" property="idcard" />
+    <result column="erId" jdbcType="INTEGER" property="erid" />
+    <result column="testTime" jdbcType="VARCHAR" property="testtime" />
+    <result column="teststarttime" jdbcType="TIMESTAMP" property="teststarttime" />
+    <result column="testendtime" jdbcType="TIMESTAMP" property="testendtime" />
+    <result column="exatid" jdbcType="INTEGER" property="exatid" />
+    <result column="exatid2" jdbcType="INTEGER" property="exatid2" />
+    <result column="totalscore" jdbcType="REAL" property="totalscore" />
+    <result column="eh" jdbcType="INTEGER" property="eh" />
+    <result column="roleId" jdbcType="INTEGER" property="roleid" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    stuId, stuNumber, stuName, stuSex, stuTel1, stuTel2, stuTel3, kType, zgType, schoolName, 
+    stuStatus, deptid, profid, stuPwd, examNumber, IDCard, erId, testTime, teststarttime, 
+    testendtime, exatid, exatid2, totalscore, eh, roleId
+  </sql>
+  <select id="selectByExample" parameterType="com.danzhao.bean.StudentExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from d_student
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from d_student
+    where stuId = #{stuid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from d_student
+    where stuId = #{stuid,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.danzhao.bean.StudentExample">
+    delete from d_student
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.danzhao.bean.Student">
+    insert into d_student (stuId, stuNumber, stuName, 
+      stuSex, stuTel1, stuTel2, 
+      stuTel3, kType, zgType, 
+      schoolName, stuStatus, deptid, 
+      profid, stuPwd, examNumber, 
+      IDCard, erId, testTime, 
+      teststarttime, testendtime, exatid, 
+      exatid2, totalscore, eh, 
+      roleId)
+    values (#{stuid,jdbcType=INTEGER}, #{stunumber,jdbcType=VARCHAR}, #{stuname,jdbcType=VARCHAR}, 
+      #{stusex,jdbcType=VARCHAR}, #{stutel1,jdbcType=VARCHAR}, #{stutel2,jdbcType=VARCHAR}, 
+      #{stutel3,jdbcType=VARCHAR}, #{ktype,jdbcType=VARCHAR}, #{zgtype,jdbcType=VARCHAR}, 
+      #{schoolname,jdbcType=VARCHAR}, #{stustatus,jdbcType=INTEGER}, #{deptid,jdbcType=INTEGER}, 
+      #{profid,jdbcType=INTEGER}, #{stupwd,jdbcType=VARCHAR}, #{examnumber,jdbcType=VARCHAR}, 
+      #{idcard,jdbcType=VARCHAR}, #{erid,jdbcType=INTEGER}, #{testtime,jdbcType=VARCHAR}, 
+      #{teststarttime,jdbcType=TIMESTAMP}, #{testendtime,jdbcType=TIMESTAMP}, #{exatid,jdbcType=INTEGER}, 
+      #{exatid2,jdbcType=INTEGER}, #{totalscore,jdbcType=REAL}, #{eh,jdbcType=INTEGER}, 
+      #{roleid,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.danzhao.bean.Student">
+    insert into d_student
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="stuid != null">
+        stuId,
+      </if>
+      <if test="stunumber != null">
+        stuNumber,
+      </if>
+      <if test="stuname != null">
+        stuName,
+      </if>
+      <if test="stusex != null">
+        stuSex,
+      </if>
+      <if test="stutel1 != null">
+        stuTel1,
+      </if>
+      <if test="stutel2 != null">
+        stuTel2,
+      </if>
+      <if test="stutel3 != null">
+        stuTel3,
+      </if>
+      <if test="ktype != null">
+        kType,
+      </if>
+      <if test="zgtype != null">
+        zgType,
+      </if>
+      <if test="schoolname != null">
+        schoolName,
+      </if>
+      <if test="stustatus != null">
+        stuStatus,
+      </if>
+      <if test="deptid != null">
+        deptid,
+      </if>
+      <if test="profid != null">
+        profid,
+      </if>
+      <if test="stupwd != null">
+        stuPwd,
+      </if>
+      <if test="examnumber != null">
+        examNumber,
+      </if>
+      <if test="idcard != null">
+        IDCard,
+      </if>
+      <if test="erid != null">
+        erId,
+      </if>
+      <if test="testtime != null">
+        testTime,
+      </if>
+      <if test="teststarttime != null">
+        teststarttime,
+      </if>
+      <if test="testendtime != null">
+        testendtime,
+      </if>
+      <if test="exatid != null">
+        exatid,
+      </if>
+      <if test="exatid2 != null">
+        exatid2,
+      </if>
+      <if test="totalscore != null">
+        totalscore,
+      </if>
+      <if test="eh != null">
+        eh,
+      </if>
+      <if test="roleid != null">
+        roleId,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="stuid != null">
+        #{stuid,jdbcType=INTEGER},
+      </if>
+      <if test="stunumber != null">
+        #{stunumber,jdbcType=VARCHAR},
+      </if>
+      <if test="stuname != null">
+        #{stuname,jdbcType=VARCHAR},
+      </if>
+      <if test="stusex != null">
+        #{stusex,jdbcType=VARCHAR},
+      </if>
+      <if test="stutel1 != null">
+        #{stutel1,jdbcType=VARCHAR},
+      </if>
+      <if test="stutel2 != null">
+        #{stutel2,jdbcType=VARCHAR},
+      </if>
+      <if test="stutel3 != null">
+        #{stutel3,jdbcType=VARCHAR},
+      </if>
+      <if test="ktype != null">
+        #{ktype,jdbcType=VARCHAR},
+      </if>
+      <if test="zgtype != null">
+        #{zgtype,jdbcType=VARCHAR},
+      </if>
+      <if test="schoolname != null">
+        #{schoolname,jdbcType=VARCHAR},
+      </if>
+      <if test="stustatus != null">
+        #{stustatus,jdbcType=INTEGER},
+      </if>
+      <if test="deptid != null">
+        #{deptid,jdbcType=INTEGER},
+      </if>
+      <if test="profid != null">
+        #{profid,jdbcType=INTEGER},
+      </if>
+      <if test="stupwd != null">
+        #{stupwd,jdbcType=VARCHAR},
+      </if>
+      <if test="examnumber != null">
+        #{examnumber,jdbcType=VARCHAR},
+      </if>
+      <if test="idcard != null">
+        #{idcard,jdbcType=VARCHAR},
+      </if>
+      <if test="erid != null">
+        #{erid,jdbcType=INTEGER},
+      </if>
+      <if test="testtime != null">
+        #{testtime,jdbcType=VARCHAR},
+      </if>
+      <if test="teststarttime != null">
+        #{teststarttime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="testendtime != null">
+        #{testendtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="exatid != null">
+        #{exatid,jdbcType=INTEGER},
+      </if>
+      <if test="exatid2 != null">
+        #{exatid2,jdbcType=INTEGER},
+      </if>
+      <if test="totalscore != null">
+        #{totalscore,jdbcType=REAL},
+      </if>
+      <if test="eh != null">
+        #{eh,jdbcType=INTEGER},
+      </if>
+      <if test="roleid != null">
+        #{roleid,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.danzhao.bean.StudentExample" resultType="java.lang.Long">
+    select count(*) from d_student
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update d_student
+    <set>
+      <if test="record.stuid != null">
+        stuId = #{record.stuid,jdbcType=INTEGER},
+      </if>
+      <if test="record.stunumber != null">
+        stuNumber = #{record.stunumber,jdbcType=VARCHAR},
+      </if>
+      <if test="record.stuname != null">
+        stuName = #{record.stuname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.stusex != null">
+        stuSex = #{record.stusex,jdbcType=VARCHAR},
+      </if>
+      <if test="record.stutel1 != null">
+        stuTel1 = #{record.stutel1,jdbcType=VARCHAR},
+      </if>
+      <if test="record.stutel2 != null">
+        stuTel2 = #{record.stutel2,jdbcType=VARCHAR},
+      </if>
+      <if test="record.stutel3 != null">
+        stuTel3 = #{record.stutel3,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ktype != null">
+        kType = #{record.ktype,jdbcType=VARCHAR},
+      </if>
+      <if test="record.zgtype != null">
+        zgType = #{record.zgtype,jdbcType=VARCHAR},
+      </if>
+      <if test="record.schoolname != null">
+        schoolName = #{record.schoolname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.stustatus != null">
+        stuStatus = #{record.stustatus,jdbcType=INTEGER},
+      </if>
+      <if test="record.deptid != null">
+        deptid = #{record.deptid,jdbcType=INTEGER},
+      </if>
+      <if test="record.profid != null">
+        profid = #{record.profid,jdbcType=INTEGER},
+      </if>
+      <if test="record.stupwd != null">
+        stuPwd = #{record.stupwd,jdbcType=VARCHAR},
+      </if>
+      <if test="record.examnumber != null">
+        examNumber = #{record.examnumber,jdbcType=VARCHAR},
+      </if>
+      <if test="record.idcard != null">
+        IDCard = #{record.idcard,jdbcType=VARCHAR},
+      </if>
+      <if test="record.erid != null">
+        erId = #{record.erid,jdbcType=INTEGER},
+      </if>
+      <if test="record.testtime != null">
+        testTime = #{record.testtime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.teststarttime != null">
+        teststarttime = #{record.teststarttime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.testendtime != null">
+        testendtime = #{record.testendtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.exatid != null">
+        exatid = #{record.exatid,jdbcType=INTEGER},
+      </if>
+      <if test="record.exatid2 != null">
+        exatid2 = #{record.exatid2,jdbcType=INTEGER},
+      </if>
+      <if test="record.totalscore != null">
+        totalscore = #{record.totalscore,jdbcType=REAL},
+      </if>
+      <if test="record.eh != null">
+        eh = #{record.eh,jdbcType=INTEGER},
+      </if>
+      <if test="record.roleid != null">
+        roleId = #{record.roleid,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update d_student
+    set stuId = #{record.stuid,jdbcType=INTEGER},
+      stuNumber = #{record.stunumber,jdbcType=VARCHAR},
+      stuName = #{record.stuname,jdbcType=VARCHAR},
+      stuSex = #{record.stusex,jdbcType=VARCHAR},
+      stuTel1 = #{record.stutel1,jdbcType=VARCHAR},
+      stuTel2 = #{record.stutel2,jdbcType=VARCHAR},
+      stuTel3 = #{record.stutel3,jdbcType=VARCHAR},
+      kType = #{record.ktype,jdbcType=VARCHAR},
+      zgType = #{record.zgtype,jdbcType=VARCHAR},
+      schoolName = #{record.schoolname,jdbcType=VARCHAR},
+      stuStatus = #{record.stustatus,jdbcType=INTEGER},
+      deptid = #{record.deptid,jdbcType=INTEGER},
+      profid = #{record.profid,jdbcType=INTEGER},
+      stuPwd = #{record.stupwd,jdbcType=VARCHAR},
+      examNumber = #{record.examnumber,jdbcType=VARCHAR},
+      IDCard = #{record.idcard,jdbcType=VARCHAR},
+      erId = #{record.erid,jdbcType=INTEGER},
+      testTime = #{record.testtime,jdbcType=VARCHAR},
+      teststarttime = #{record.teststarttime,jdbcType=TIMESTAMP},
+      testendtime = #{record.testendtime,jdbcType=TIMESTAMP},
+      exatid = #{record.exatid,jdbcType=INTEGER},
+      exatid2 = #{record.exatid2,jdbcType=INTEGER},
+      totalscore = #{record.totalscore,jdbcType=REAL},
+      eh = #{record.eh,jdbcType=INTEGER},
+      roleId = #{record.roleid,jdbcType=INTEGER}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.danzhao.bean.Student">
+    update d_student
+    <set>
+      <if test="stunumber != null">
+        stuNumber = #{stunumber,jdbcType=VARCHAR},
+      </if>
+      <if test="stuname != null">
+        stuName = #{stuname,jdbcType=VARCHAR},
+      </if>
+      <if test="stusex != null">
+        stuSex = #{stusex,jdbcType=VARCHAR},
+      </if>
+      <if test="stutel1 != null">
+        stuTel1 = #{stutel1,jdbcType=VARCHAR},
+      </if>
+      <if test="stutel2 != null">
+        stuTel2 = #{stutel2,jdbcType=VARCHAR},
+      </if>
+      <if test="stutel3 != null">
+        stuTel3 = #{stutel3,jdbcType=VARCHAR},
+      </if>
+      <if test="ktype != null">
+        kType = #{ktype,jdbcType=VARCHAR},
+      </if>
+      <if test="zgtype != null">
+        zgType = #{zgtype,jdbcType=VARCHAR},
+      </if>
+      <if test="schoolname != null">
+        schoolName = #{schoolname,jdbcType=VARCHAR},
+      </if>
+      <if test="stustatus != null">
+        stuStatus = #{stustatus,jdbcType=INTEGER},
+      </if>
+      <if test="deptid != null">
+        deptid = #{deptid,jdbcType=INTEGER},
+      </if>
+      <if test="profid != null">
+        profid = #{profid,jdbcType=INTEGER},
+      </if>
+      <if test="stupwd != null">
+        stuPwd = #{stupwd,jdbcType=VARCHAR},
+      </if>
+      <if test="examnumber != null">
+        examNumber = #{examnumber,jdbcType=VARCHAR},
+      </if>
+      <if test="idcard != null">
+        IDCard = #{idcard,jdbcType=VARCHAR},
+      </if>
+      <if test="erid != null">
+        erId = #{erid,jdbcType=INTEGER},
+      </if>
+      <if test="testtime != null">
+        testTime = #{testtime,jdbcType=VARCHAR},
+      </if>
+      <if test="teststarttime != null">
+        teststarttime = #{teststarttime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="testendtime != null">
+        testendtime = #{testendtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="exatid != null">
+        exatid = #{exatid,jdbcType=INTEGER},
+      </if>
+      <if test="exatid2 != null">
+        exatid2 = #{exatid2,jdbcType=INTEGER},
+      </if>
+      <if test="totalscore != null">
+        totalscore = #{totalscore,jdbcType=REAL},
+      </if>
+      <if test="eh != null">
+        eh = #{eh,jdbcType=INTEGER},
+      </if>
+      <if test="roleid != null">
+        roleId = #{roleid,jdbcType=INTEGER},
+      </if>
+    </set>
+    where stuId = #{stuid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.danzhao.bean.Student">
+    update d_student
+    set stuNumber = #{stunumber,jdbcType=VARCHAR},
+      stuName = #{stuname,jdbcType=VARCHAR},
+      stuSex = #{stusex,jdbcType=VARCHAR},
+      stuTel1 = #{stutel1,jdbcType=VARCHAR},
+      stuTel2 = #{stutel2,jdbcType=VARCHAR},
+      stuTel3 = #{stutel3,jdbcType=VARCHAR},
+      kType = #{ktype,jdbcType=VARCHAR},
+      zgType = #{zgtype,jdbcType=VARCHAR},
+      schoolName = #{schoolname,jdbcType=VARCHAR},
+      stuStatus = #{stustatus,jdbcType=INTEGER},
+      deptid = #{deptid,jdbcType=INTEGER},
+      profid = #{profid,jdbcType=INTEGER},
+      stuPwd = #{stupwd,jdbcType=VARCHAR},
+      examNumber = #{examnumber,jdbcType=VARCHAR},
+      IDCard = #{idcard,jdbcType=VARCHAR},
+      erId = #{erid,jdbcType=INTEGER},
+      testTime = #{testtime,jdbcType=VARCHAR},
+      teststarttime = #{teststarttime,jdbcType=TIMESTAMP},
+      testendtime = #{testendtime,jdbcType=TIMESTAMP},
+      exatid = #{exatid,jdbcType=INTEGER},
+      exatid2 = #{exatid2,jdbcType=INTEGER},
+      totalscore = #{totalscore,jdbcType=REAL},
+      eh = #{eh,jdbcType=INTEGER},
+      roleId = #{roleid,jdbcType=INTEGER}
+    where stuId = #{stuid,jdbcType=INTEGER}
+  </update>
+</mapper>

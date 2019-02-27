@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.danzhao.dao.ExaminerGradeMapper">
+  <resultMap id="BaseResultMap" type="com.danzhao.bean.ExaminerGrade">
+    <id column="examinerGardeId" jdbcType="INTEGER" property="examinergardeid" />
+    <result column="examinerId" jdbcType="INTEGER" property="examinerid" />
+    <result column="stuid" jdbcType="INTEGER" property="stuid" />
+    <result column="Result" jdbcType="VARCHAR" property="result" />
+    <result column="score" jdbcType="REAL" property="score" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    examinerGardeId, examinerId, stuid, Result, score
+  </sql>
+  <select id="selectByExample" parameterType="com.danzhao.bean.ExaminerGradeExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from d_examinergrade
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from d_examinergrade
+    where examinerGardeId = #{examinergardeid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from d_examinergrade
+    where examinerGardeId = #{examinergardeid,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.danzhao.bean.ExaminerGradeExample">
+    delete from d_examinergrade
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.danzhao.bean.ExaminerGrade">
+    insert into d_examinergrade (examinerGardeId, examinerId, stuid, 
+      Result, score)
+    values (#{examinergardeid,jdbcType=INTEGER}, #{examinerid,jdbcType=INTEGER}, #{stuid,jdbcType=INTEGER}, 
+      #{result,jdbcType=VARCHAR}, #{score,jdbcType=REAL})
+  </insert>
+  <insert id="insertSelective" parameterType="com.danzhao.bean.ExaminerGrade">
+    insert into d_examinergrade
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="examinergardeid != null">
+        examinerGardeId,
+      </if>
+      <if test="examinerid != null">
+        examinerId,
+      </if>
+      <if test="stuid != null">
+        stuid,
+      </if>
+      <if test="result != null">
+        Result,
+      </if>
+      <if test="score != null">
+        score,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="examinergardeid != null">
+        #{examinergardeid,jdbcType=INTEGER},
+      </if>
+      <if test="examinerid != null">
+        #{examinerid,jdbcType=INTEGER},
+      </if>
+      <if test="stuid != null">
+        #{stuid,jdbcType=INTEGER},
+      </if>
+      <if test="result != null">
+        #{result,jdbcType=VARCHAR},
+      </if>
+      <if test="score != null">
+        #{score,jdbcType=REAL},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.danzhao.bean.ExaminerGradeExample" resultType="java.lang.Long">
+    select count(*) from d_examinergrade
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update d_examinergrade
+    <set>
+      <if test="record.examinergardeid != null">
+        examinerGardeId = #{record.examinergardeid,jdbcType=INTEGER},
+      </if>
+      <if test="record.examinerid != null">
+        examinerId = #{record.examinerid,jdbcType=INTEGER},
+      </if>
+      <if test="record.stuid != null">
+        stuid = #{record.stuid,jdbcType=INTEGER},
+      </if>
+      <if test="record.result != null">
+        Result = #{record.result,jdbcType=VARCHAR},
+      </if>
+      <if test="record.score != null">
+        score = #{record.score,jdbcType=REAL},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update d_examinergrade
+    set examinerGardeId = #{record.examinergardeid,jdbcType=INTEGER},
+      examinerId = #{record.examinerid,jdbcType=INTEGER},
+      stuid = #{record.stuid,jdbcType=INTEGER},
+      Result = #{record.result,jdbcType=VARCHAR},
+      score = #{record.score,jdbcType=REAL}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.danzhao.bean.ExaminerGrade">
+    update d_examinergrade
+    <set>
+      <if test="examinerid != null">
+        examinerId = #{examinerid,jdbcType=INTEGER},
+      </if>
+      <if test="stuid != null">
+        stuid = #{stuid,jdbcType=INTEGER},
+      </if>
+      <if test="result != null">
+        Result = #{result,jdbcType=VARCHAR},
+      </if>
+      <if test="score != null">
+        score = #{score,jdbcType=REAL},
+      </if>
+    </set>
+    where examinerGardeId = #{examinergardeid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.danzhao.bean.ExaminerGrade">
+    update d_examinergrade
+    set examinerId = #{examinerid,jdbcType=INTEGER},
+      stuid = #{stuid,jdbcType=INTEGER},
+      Result = #{result,jdbcType=VARCHAR},
+      score = #{score,jdbcType=REAL}
+    where examinerGardeId = #{examinergardeid,jdbcType=INTEGER}
+  </update>
+</mapper>

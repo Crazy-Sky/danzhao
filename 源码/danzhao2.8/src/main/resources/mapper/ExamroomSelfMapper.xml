@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.danzhao.dao.ExamroomMapper">
+  <resultMap id="erDtoBaseResultMap" type="com.danzhao.dto.ExamroomDto">
+    <id column="erId" jdbcType="INTEGER" property="erid" />
+    <result column="erName" jdbcType="VARCHAR" property="ername" />
+    <result column="erType" jdbcType="INTEGER" property="ertype" />
+    <result column="deptid" jdbcType="INTEGER" property="deptid" />
+    <result column="deptName" jdbcType="VARCHAR" property="deptname" />
+    <result column="proflist" jdbcType="VARCHAR" property="proflist" />
+    <result column="userId" jdbcType="INTEGER" property="userid" />
+    <result column="userName" jdbcType="VARCHAR" property="username" />
+    
+  </resultMap>
+  <sql id="ErDtoExample_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  
+  <sql id="erDtoBase_Column_List">
+    er.* , dept.deptName deptName, u.userId, u.userName
+  </sql>
+   <sql id="erDtoNoUserBase_Column_List">
+    er.* , dept.deptName deptName
+  </sql>
+  
+  <select id="selectErDtosByExample" parameterType="com.danzhao.bean.ExamroomExample" resultMap="erDtoBaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="erDtoBase_Column_List" />
+    from d_examroom er
+    left join d_department dept
+    on er.deptid = dept.deptId
+    left join d_user u
+    on u.erid = er.erId
+    <if test="_parameter != null">
+      <include refid="ErDtoExample_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  
+  <select id="selectDtoByPrimaryKey" parameterType="java.lang.Integer" resultMap="erDtoBaseResultMap">
+    select 
+    <include refid="erDtoBase_Column_List" />
+    from d_examroom er
+    left join d_department dept
+    on er.deptid = dept.deptId
+    left join d_user u
+    on u.erid = er.erId
+    where er.erId = #{erid,jdbcType=INTEGER}
+    and (u.userRole = 3 or u.userRole = 4 or u.userRole is null)
+  </select>
+  
+  <select id="selectErDtosByDept" parameterType="java.lang.Integer" resultMap="erDtoBaseResultMap">
+    select
+    <include refid="erDtoBase_Column_List" />
+    from d_examroom er
+    left join d_department dept
+    on er.deptid = dept.deptId
+    left join d_user u
+    on u.erid = er.erId
+    where er.deptid = #{deptid,jdbcType=INTEGER}
+    and (u.userRole = 3 or u.userRole = 4 or u.userRole is null)
+  </select>
+  
+  <select id="selectErDtosByDeptAndType" parameterType="com.danzhao.bean.Examroom" resultMap="erDtoBaseResultMap">
+    select
+    <include refid="erDtoBase_Column_List" />
+    from d_examroom er
+    left join d_department dept
+    on er.deptid = dept.deptId
+    left join d_user u
+    on u.erid = er.erId
+    where er.deptid = #{deptid,jdbcType=INTEGER}
+    and er.ertype = #{ertype,jdbcType=INTEGER}
+    and (u.userRole = 3 or u.userRole = 4 or u.userRole is null)
+  </select>
+  
+  <select id="selectsByDeptAndType" parameterType="com.danzhao.bean.Examroom" resultMap="erDtoBaseResultMap">
+    select
+    <include refid="erDtoNoUserBase_Column_List" />
+    from d_examroom er
+    left join d_department dept
+    on er.deptid = dept.deptId
+    where er.deptid = #{deptid,jdbcType=INTEGER}
+    and er.ertype = #{ertype,jdbcType=INTEGER}
+  </select>
+  
+</mapper>

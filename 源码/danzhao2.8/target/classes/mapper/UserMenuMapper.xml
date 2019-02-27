@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.danzhao.dao.UserMenuMapper">
+  <resultMap id="BaseResultMap" type="com.danzhao.bean.UserMenu">
+    <id column="menuId" jdbcType="INTEGER" property="menuid" />
+    <result column="menuName" jdbcType="VARCHAR" property="menuname" />
+    <result column="menuLink" jdbcType="VARCHAR" property="menulink" />
+    <result column="parentId" jdbcType="INTEGER" property="parentid" />
+    <result column="roleId" jdbcType="INTEGER" property="roleid" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    menuId, menuName, menuLink, parentId, roleId
+  </sql>
+  <select id="selectByExample" parameterType="com.danzhao.bean.UserMenuExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from d_menu
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from d_menu
+    where menuId = #{menuid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from d_menu
+    where menuId = #{menuid,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.danzhao.bean.UserMenuExample">
+    delete from d_menu
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.danzhao.bean.UserMenu">
+    insert into d_menu (menuId, menuName, menuLink, 
+      parentId, roleId)
+    values (#{menuid,jdbcType=INTEGER}, #{menuname,jdbcType=VARCHAR}, #{menulink,jdbcType=VARCHAR}, 
+      #{parentid,jdbcType=INTEGER}, #{roleid,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.danzhao.bean.UserMenu">
+    insert into d_menu
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="menuid != null">
+        menuId,
+      </if>
+      <if test="menuname != null">
+        menuName,
+      </if>
+      <if test="menulink != null">
+        menuLink,
+      </if>
+      <if test="parentid != null">
+        parentId,
+      </if>
+      <if test="roleid != null">
+        roleId,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="menuid != null">
+        #{menuid,jdbcType=INTEGER},
+      </if>
+      <if test="menuname != null">
+        #{menuname,jdbcType=VARCHAR},
+      </if>
+      <if test="menulink != null">
+        #{menulink,jdbcType=VARCHAR},
+      </if>
+      <if test="parentid != null">
+        #{parentid,jdbcType=INTEGER},
+      </if>
+      <if test="roleid != null">
+        #{roleid,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.danzhao.bean.UserMenuExample" resultType="java.lang.Long">
+    select count(*) from d_menu
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update d_menu
+    <set>
+      <if test="record.menuid != null">
+        menuId = #{record.menuid,jdbcType=INTEGER},
+      </if>
+      <if test="record.menuname != null">
+        menuName = #{record.menuname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.menulink != null">
+        menuLink = #{record.menulink,jdbcType=VARCHAR},
+      </if>
+      <if test="record.parentid != null">
+        parentId = #{record.parentid,jdbcType=INTEGER},
+      </if>
+      <if test="record.roleid != null">
+        roleId = #{record.roleid,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update d_menu
+    set menuId = #{record.menuid,jdbcType=INTEGER},
+      menuName = #{record.menuname,jdbcType=VARCHAR},
+      menuLink = #{record.menulink,jdbcType=VARCHAR},
+      parentId = #{record.parentid,jdbcType=INTEGER},
+      roleId = #{record.roleid,jdbcType=INTEGER}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.danzhao.bean.UserMenu">
+    update d_menu
+    <set>
+      <if test="menuname != null">
+        menuName = #{menuname,jdbcType=VARCHAR},
+      </if>
+      <if test="menulink != null">
+        menuLink = #{menulink,jdbcType=VARCHAR},
+      </if>
+      <if test="parentid != null">
+        parentId = #{parentid,jdbcType=INTEGER},
+      </if>
+      <if test="roleid != null">
+        roleId = #{roleid,jdbcType=INTEGER},
+      </if>
+    </set>
+    where menuId = #{menuid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.danzhao.bean.UserMenu">
+    update d_menu
+    set menuName = #{menuname,jdbcType=VARCHAR},
+      menuLink = #{menulink,jdbcType=VARCHAR},
+      parentId = #{parentid,jdbcType=INTEGER},
+      roleId = #{roleid,jdbcType=INTEGER}
+    where menuId = #{menuid,jdbcType=INTEGER}
+  </update>
+</mapper>
