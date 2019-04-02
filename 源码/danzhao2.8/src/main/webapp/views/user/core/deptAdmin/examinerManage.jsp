@@ -129,6 +129,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 							<form id="updateExaminerForm" onsubmit="return false;">
 								<input type="hidden" name="userid">
 								<div class="form_group">
+			                       <label>用户邮箱:</label>
+				        		   <input type="email" name="useremail" check="required email" class="form_control">
+			                    </div>
+								<div class="form_group">
 			                       <label>专业名称:</label>
 				        		   <input type="text" name="username" check="required chinesse" class="form_control">
 			                    </div>
@@ -153,38 +157,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			                    <div class="form_group">
 				        		   <input type="submit" value="保    存" class="form_control">
 			                    </div>
-			                    <!--  
-								<table align="center">
-		            				<tr>
-				                    	<td>
-						                    <input type="text" name="username" check="required chinesse" placeholder="考官姓名">
-									    </td>
-									    <td>
-				     						<input type="text" name="userphone" check="required phone" placeholder="联系电话">
-				     					</td>
-				     				</tr>
-				                	<tr>
-				                    	<td>
-						                     <select name="userrole" class="form_control">
-									       		<option value="3">主考官</option>
-								        		<option value="5">考官</option>
-								        		<option value="4">候考管理员</option>
-								        		<option value="6">统分员</option>
-									       	</select>
-						                </td> 
-						                <td>   
-						                   <select id="updateExaminer_examrooms" name="erid" >
-								        		<!-- <option value='' >考场</option> 
-								           </select>
-						                </td>
-				                	</tr>
-					                <tr>
-		    							<td colspan="2" align="center">
-				                    		<input type="submit" value="保    存" class="form_button">
-				                    	</td>
-				                    </tr>
-				                </table>
-				                -->
+			                    
 			                </form>
 			            </div>
 		            </div>

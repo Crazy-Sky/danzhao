@@ -57,7 +57,9 @@ function goUpdateExaminer(userid) {
 				userid : userid
 			},
             success: function (userDto) {
+	
 				$("#updateExaminerForm input[name='userid']").val(userDto.userid);
+				$("#updateExaminerForm input[name='useremail']").val(userDto.useremail);
 				$("#updateExaminerForm input[name='username']").val(userDto.username);
 				$("#updateExaminerForm input[name='userphone']").val(userDto.userphone);
 				$("#updateExaminerForm select[name='userrole']").val(userDto.userrole);
