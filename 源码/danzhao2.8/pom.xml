@@ -207,12 +207,6 @@
             <artifactId>commons-codec</artifactId>
             <version>1.11</version>
         </dependency>
-        <!-- https://mvnrepository.com/artifact/com.baidu.ueditor/ueditor -->
-		<dependency>
-		    <groupId>com.baidu.ueditor</groupId>
-		    <artifactId>ueditor</artifactId>
-		    <version>1.1.2</version>
-		</dependency>
 		
 		<!-- 语音播报 -->
 		<!-- https://mvnrepository.com/artifact/com.jacob/jacob -->
