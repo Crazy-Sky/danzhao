@@ -15,7 +15,7 @@
     <jdbcConnection driverClass="com.mysql.jdbc.Driver"
         connectionURL="jdbc:mysql:///db_danzhao"
         userId="root"
-        password="cx154660165">
+        password="root">
     </jdbcConnection>
 
     <javaTypeResolver >
@@ -47,9 +47,9 @@
 	<!-- 指定每个表的生成策略 -->
 	<!-- <table tableName="d_department" domainObjectName="Department" ></table>
 	<table tableName="d_examhistory" domainObjectName="Examhistory" ></table>
-	<table tableName="d_examination" domainObjectName="Examination" ></table>
+	<table tableName="d_examination" domainObjectName="Examination" ></table> -->
 	<table tableName="d_examroom" domainObjectName="Examroom" ></table>
-	<table tableName="d_levelright" domainObjectName="Levelright" ></table>
+	<!-- <table tableName="d_levelright" domainObjectName="Levelright" ></table>
 	<table tableName="d_profession" domainObjectName="Profession" ></table>
 	<table tableName="d_student" domainObjectName="Student" ></table> 
 	<table tableName="d_testright" domainObjectName="Testright"></table>
@@ -57,9 +57,9 @@
 	<table tableName="d_role" domainObjectName="UserRole"></table>
 	<table tableName="d_menu" domainObjectName="UserMenu"></table>
 	<table tableName="d_email" domainObjectName="EmailBean"></table> -->
-	<table tableName="d_user" domainObjectName="User"></table>
+	<!-- <table tableName="d_user" domainObjectName="User"></table>
 	<table tableName="d_student" domainObjectName="Student" ></table>
-	<table tableName="d_examinergrade" domainObjectName="ExaminerGrade"></table>
+	<table tableName="d_examinergrade" domainObjectName="ExaminerGrade"></table> -->
 	
   </context>
 </generatorConfiguration>

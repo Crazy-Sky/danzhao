@@ -9,7 +9,7 @@ public class Examroom {
 
     private Integer deptid;
 
-    private String proflist;
+    private String testRoomList;
 
     public Integer getErid() {
         return erid;
@@ -43,18 +43,11 @@ public class Examroom {
         this.deptid = deptid;
     }
 
-    public String getProflist() {
-        return proflist;
+    public String getTestRoomList() {
+        return testRoomList;
     }
 
-    public void setProflist(String proflist) {
-        this.proflist = proflist == null ? null : proflist.trim();
+    public void setTestRoomList(String testRoomList) {
+        this.testRoomList = testRoomList == null ? null : testRoomList.trim();
     }
-
-	@Override
-	public String toString() {
-		return "Examroom [erid=" + erid + ", ername=" + ername + ", ertype="
-				+ ertype + ", deptid=" + deptid + ", proflist=" + proflist
-				+ "]";
-	}
 }

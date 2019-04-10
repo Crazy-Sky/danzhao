@@ -6,7 +6,7 @@
     <result column="erName" jdbcType="VARCHAR" property="ername" />
     <result column="erType" jdbcType="INTEGER" property="ertype" />
     <result column="deptid" jdbcType="INTEGER" property="deptid" />
-    <result column="proflist" jdbcType="VARCHAR" property="proflist" />
+    <result column="test_room_list" jdbcType="VARCHAR" property="testRoomList" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -67,7 +67,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    erId, erName, erType, deptid, proflist
+    erId, erName, erType, deptid, test_room_list
   </sql>
   <select id="selectByExample" parameterType="com.danzhao.bean.ExamroomExample" resultMap="BaseResultMap">
     select
@@ -101,9 +101,9 @@
   </delete>
   <insert id="insert" parameterType="com.danzhao.bean.Examroom">
     insert into d_examroom (erId, erName, erType, 
-      deptid, proflist)
+      deptid, test_room_list)
     values (#{erid,jdbcType=INTEGER}, #{ername,jdbcType=VARCHAR}, #{ertype,jdbcType=INTEGER}, 
-      #{deptid,jdbcType=INTEGER}, #{proflist,jdbcType=VARCHAR})
+      #{deptid,jdbcType=INTEGER}, #{testRoomList,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.danzhao.bean.Examroom">
     insert into d_examroom
@@ -120,8 +120,8 @@
       <if test="deptid != null">
         deptid,
       </if>
-      <if test="proflist != null">
-        proflist,
+      <if test="testRoomList != null">
+        test_room_list,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
@@ -137,8 +137,8 @@
       <if test="deptid != null">
         #{deptid,jdbcType=INTEGER},
       </if>
-      <if test="proflist != null">
-        #{proflist,jdbcType=VARCHAR},
+      <if test="testRoomList != null">
+        #{testRoomList,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -163,8 +163,8 @@
       <if test="record.deptid != null">
         deptid = #{record.deptid,jdbcType=INTEGER},
       </if>
-      <if test="record.proflist != null">
-        proflist = #{record.proflist,jdbcType=VARCHAR},
+      <if test="record.testRoomList != null">
+        test_room_list = #{record.testRoomList,jdbcType=VARCHAR},
       </if>
     </set>
     <if test="_parameter != null">
@@ -177,7 +177,7 @@
       erName = #{record.ername,jdbcType=VARCHAR},
       erType = #{record.ertype,jdbcType=INTEGER},
       deptid = #{record.deptid,jdbcType=INTEGER},
-      proflist = #{record.proflist,jdbcType=VARCHAR}
+      test_room_list = #{record.testRoomList,jdbcType=VARCHAR}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -194,8 +194,8 @@
       <if test="deptid != null">
         deptid = #{deptid,jdbcType=INTEGER},
       </if>
-      <if test="proflist != null">
-        proflist = #{proflist,jdbcType=VARCHAR},
+      <if test="testRoomList != null">
+        test_room_list = #{testRoomList,jdbcType=VARCHAR},
       </if>
     </set>
     where erId = #{erid,jdbcType=INTEGER}
@@ -205,7 +205,7 @@
     set erName = #{ername,jdbcType=VARCHAR},
       erType = #{ertype,jdbcType=INTEGER},
       deptid = #{deptid,jdbcType=INTEGER},
-      proflist = #{proflist,jdbcType=VARCHAR}
+      test_room_list = #{testRoomList,jdbcType=VARCHAR}
     where erId = #{erid,jdbcType=INTEGER}
   </update>
 </mapper>

@@ -7,7 +7,7 @@
     <result column="erType" jdbcType="INTEGER" property="ertype" />
     <result column="deptid" jdbcType="INTEGER" property="deptid" />
     <result column="deptName" jdbcType="VARCHAR" property="deptname" />
-    <result column="proflist" jdbcType="VARCHAR" property="proflist" />
+    <result column="test_room_list" jdbcType="VARCHAR" property="testRoomList" />
     <result column="userId" jdbcType="INTEGER" property="userid" />
     <result column="userName" jdbcType="VARCHAR" property="username" />
     

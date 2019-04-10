@@ -28,22 +28,18 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     	<form id="insertExamroomForm" onsubmit="return false;">
     		<input type="hidden" id="deptid" name="deptid" value="${sessionScope.user.deptid}" >
 	    	<div class="form_group">
-		    	<select name="ertype" >
+		    	<select name="ertype" id="insertExamroom" >
 	        		<option value="0" >候考考场</option>
 	        		<option value="1" >测试考场</option>
 	        	</select>
 	        	<input type="text" name="ername" check="required" placeholder="考场名称">
 	        </div>
-	        <div class="form_group" >
-		    	<!--
-	            	描述：后台返回专业建立多选
-	            -->
-	            <label>选择专业:&emsp;</label>
-	            <div class="inline" id="profidsDiv">
-		            <input type='checkbox' name='profids' value='专业ID'>软件技术&emsp;&emsp;
-		            <input type='checkbox' name='profids' value='专业ID'>软件测试&emsp;&emsp;
-	            </div>
-	            <input type="submit" value="添加考场">
+	        <div class="form_group insertTestRoom" >
+	            <label>选择对应测试考场:&emsp;</label>
+	            <div class="inline" id="testRoomIdsDiv"></div>
+	        </div>
+	        <div class="form_group">
+	        	<input type="submit" value="添加考场">
 	        </div>
     	</form>
         <table cellpadding="0" cellspacing="0" border="0" id="table2" class="stdtable stdtablecb">
@@ -131,42 +127,13 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		        					  <option value="1" >测试考场</option>
 								 </select>
 			                 </div>
-			                 <div class="form_group">
-			                     <div class="inline" id="updateProfidsDiv">
-								      <input type='checkbox' name='profids' value='专业ID'>软件技术&emsp;&emsp;
-								      <input type='checkbox' name='profids' value='专业ID'>软件测试&emsp;&emsp;
-							     </div>
+			                 <div class="form_group updateTestRoom">
+			                	 <label>选择对应测试考场:&emsp;</label>
+			                     <div class="inline" id="updatetestRoomIdsDiv"></div>
 			                 </div>
 			                 <div class="form_group">
 			                     <input type="submit" value="保    存" class="form_control">
 			                 </div>
-							<!-- <table align="center">
-	            				<tr>
-								    <td>
-			     						<input type="text" name="ername" check="required" placeholder="考场名称">
-			     					</td>
-			     					<td>
-					                    <select id="updateExamroom" name="ertype"  >
-								       		<option value="0" >候考考场</option>
-		        							<option value="1" >测试考场</option>
-								       	</select>
-					                </td> 
-			     				</tr>
-								<tr>
-			                    	<td colspan="2">
-					                	<div class="inline" id="updateProfidsDiv">
-								            <input type='checkbox' name='profids' value='专业ID'>软件技术&emsp;&emsp;
-								            <input type='checkbox' name='profids' value='专业ID'>软件测试&emsp;&emsp;
-							            </div>
-					                </td>
-			                	</tr>
-				                <tr>
-	    							<td colspan="2" align="center">
-			                    		<input type="submit" value="保    存" class="form_button">
-			                    	</td>
-			                    </tr>
-			                </table>
-			                 -->
 		                </form>
 		            </div>
 	           	 </div>

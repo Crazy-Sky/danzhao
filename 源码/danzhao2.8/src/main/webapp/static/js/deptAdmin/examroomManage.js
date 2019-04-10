@@ -1,9 +1,29 @@
 
 $(function() {
 	// 获取专业显示在CheckBox上
-	selectProfByDeptIdInCheckbox($("#profidsDiv"),$("#deptid").val());
+//	selectProfByDeptIdInCheckbox($("#profidsDiv"),$("#deptid").val());
 	
-	selectProfByDeptIdInCheckbox($("#updateProfidsDiv"),$("#deptid").val());
+//	selectProfByDeptIdInCheckbox($("#updateProfidsDiv"),$("#deptid").val());
+	
+	// 获取测试考场显示在CheckBox上
+	selectErsByDeptAndTypeInInCheckbox($("#testRoomIdsDiv"),$("#deptid").val(),1);
+	selectErsByDeptAndTypeInInCheckbox($("#updatetestRoomIdsDiv"),$("#deptid").val(),1);
+	
+	$("#insertExamroom").change(function() {
+		if($(this).value == 0){ //侯考场
+			$(".insertTestRoom").show();
+		}else{
+			$(".insertTestRoom").hide();
+		}
+	});
+	
+	$("#updateExamroom").change(function() {
+		if($(this).value == 0){ //侯考场
+			$(".updateTestRoom").show();
+		}else{
+			$(".updateTestRoom").hide();
+		}
+	});
 	
 	//查询所有考场
 //	var examroomTabs = $("#examroomTabs");
@@ -12,7 +32,6 @@ $(function() {
 	// 添加考场
 	$("#insertExamroomForm").checkForm();
 	$("#insertExamroomForm").submit(function(){
-//		alert($("#insertExamroomForm input[name='profids']").val());
 		saveExamroom($("#insertExamroomForm"),"examroom/insertOneEr");
 	});
 	
@@ -21,6 +40,8 @@ $(function() {
 	$("#updateExamroomForm").submit(function(){
 		saveExamroom($("#updateExamroomForm"),"examroom/updateOneEr");
 	});
+	
+	
 	
 });
 
@@ -62,12 +83,12 @@ function selectErDtosByDeptPaging(nowPage) {
 						ertypeText = "测试考场";
 					}
 					//专业
-					var profNames = "";
-					var proflists = erDtos[i].proflistNames;
-					for (var j = 0; j < proflists.length;j++) {
-						profNames += proflists[j];
-						if(j < proflists.length-1){
-							profNames += " | ";
+					var testRoomNames = "";
+					var testRoomNameLists = erDtos[i].testRoomNames;
+					for (var j = 0; j < testRoomNameLists.length;j++) {
+						testRoomNames += testRoomNameLists[j];
+						if(j < testRoomNameLists.length-1){
+							testRoomNames += " | ";
 						}
 					}
 					//编号
@@ -82,7 +103,7 @@ function selectErDtosByDeptPaging(nowPage) {
 							'<td>'+num+'</td>'+
 							'<td>'+erDtos[i].ername+'</td>'+
 							'<td>'+ertypeText+'</td>'+
-							'<td>'+profNames+'</td>'+
+							'<td>'+testRoomNames+'</td>'+
 							'<td>'+username+'</td>'+
 							"<td class='center'>"+
 							"<a href='javascript:void(0);' onclick='goUpdateExamroom("+erDtos[i].erid+")'>修改</a> | " +

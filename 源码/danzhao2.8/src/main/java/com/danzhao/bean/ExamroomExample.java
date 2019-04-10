@@ -354,73 +354,73 @@ public class ExamroomExample {
             return (Criteria) this;
         }
 
-        public Criteria andProflistIsNull() {
-            addCriterion("proflist is null");
+        public Criteria andTestRoomListIsNull() {
+            addCriterion("test_room_list is null");
             return (Criteria) this;
         }
 
-        public Criteria andProflistIsNotNull() {
-            addCriterion("proflist is not null");
+        public Criteria andTestRoomListIsNotNull() {
+            addCriterion("test_room_list is not null");
             return (Criteria) this;
         }
 
-        public Criteria andProflistEqualTo(String value) {
-            addCriterion("proflist =", value, "proflist");
+        public Criteria andTestRoomListEqualTo(String value) {
+            addCriterion("test_room_list =", value, "testRoomList");
             return (Criteria) this;
         }
 
-        public Criteria andProflistNotEqualTo(String value) {
-            addCriterion("proflist <>", value, "proflist");
+        public Criteria andTestRoomListNotEqualTo(String value) {
+            addCriterion("test_room_list <>", value, "testRoomList");
             return (Criteria) this;
         }
 
-        public Criteria andProflistGreaterThan(String value) {
-            addCriterion("proflist >", value, "proflist");
+        public Criteria andTestRoomListGreaterThan(String value) {
+            addCriterion("test_room_list >", value, "testRoomList");
             return (Criteria) this;
         }
 
-        public Criteria andProflistGreaterThanOrEqualTo(String value) {
-            addCriterion("proflist >=", value, "proflist");
+        public Criteria andTestRoomListGreaterThanOrEqualTo(String value) {
+            addCriterion("test_room_list >=", value, "testRoomList");
             return (Criteria) this;
         }
 
-        public Criteria andProflistLessThan(String value) {
-            addCriterion("proflist <", value, "proflist");
+        public Criteria andTestRoomListLessThan(String value) {
+            addCriterion("test_room_list <", value, "testRoomList");
             return (Criteria) this;
         }
 
-        public Criteria andProflistLessThanOrEqualTo(String value) {
-            addCriterion("proflist <=", value, "proflist");
+        public Criteria andTestRoomListLessThanOrEqualTo(String value) {
+            addCriterion("test_room_list <=", value, "testRoomList");
             return (Criteria) this;
         }
 
-        public Criteria andProflistLike(String value) {
-            addCriterion("proflist like", value, "proflist");
+        public Criteria andTestRoomListLike(String value) {
+            addCriterion("test_room_list like", value, "testRoomList");
             return (Criteria) this;
         }
 
-        public Criteria andProflistNotLike(String value) {
-            addCriterion("proflist not like", value, "proflist");
+        public Criteria andTestRoomListNotLike(String value) {
+            addCriterion("test_room_list not like", value, "testRoomList");
             return (Criteria) this;
         }
 
-        public Criteria andProflistIn(List<String> values) {
-            addCriterion("proflist in", values, "proflist");
+        public Criteria andTestRoomListIn(List<String> values) {
+            addCriterion("test_room_list in", values, "testRoomList");
             return (Criteria) this;
         }
 
-        public Criteria andProflistNotIn(List<String> values) {
-            addCriterion("proflist not in", values, "proflist");
+        public Criteria andTestRoomListNotIn(List<String> values) {
+            addCriterion("test_room_list not in", values, "testRoomList");
             return (Criteria) this;
         }
 
-        public Criteria andProflistBetween(String value1, String value2) {
-            addCriterion("proflist between", value1, value2, "proflist");
+        public Criteria andTestRoomListBetween(String value1, String value2) {
+            addCriterion("test_room_list between", value1, value2, "testRoomList");
             return (Criteria) this;
         }
 
-        public Criteria andProflistNotBetween(String value1, String value2) {
-            addCriterion("proflist not between", value1, value2, "proflist");
+        public Criteria andTestRoomListNotBetween(String value1, String value2) {
+            addCriterion("test_room_list not between", value1, value2, "testRoomList");
             return (Criteria) this;
         }
     }

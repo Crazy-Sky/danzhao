@@ -79,7 +79,7 @@ function getErsByDeptAndTypeInselect(deptid,ertype,selectInfos){
 		dataType : "json",
 		data:{
 			deptid : deptid,
-			ertype : ertype,
+			ertype : ertype
 		},
 		success : function (message) {
 			selectInfos.empty();
@@ -93,6 +93,30 @@ function getErsByDeptAndTypeInselect(deptid,ertype,selectInfos){
 			
 		}
 	});
+}
+//根据系部和考场状态获取考场显示在多选按钮上
+function selectErsByDeptAndTypeInInCheckbox (testRoomLists,deptid,ertype) {
+	$.ajax({
+        async: false,
+        type: "post",
+        url :"examroom/selectsByDeptAndType",
+        contentType : "application/x-www-form-urlencoded; charset=utf-8",
+		data: {
+			deptid : deptid,
+			ertype : ertype
+		},
+        dataType: "json",
+        success: function (message) {
+			testRoomLists.empty();
+			for(var i=0;i<message.length;i++){  
+				testRoomLists.append("<label>"+message[i].ername+"：<input type='checkbox' name='testRoomList' " +
+						"value='"+message[i].erid+"'></label>&emsp;&emsp;");
+			}
+        },
+        error: function () {
+			alert("获取测试考场失败！");
+        }
+    });
 }
 
 //根据系部获取所有专业显示在select上

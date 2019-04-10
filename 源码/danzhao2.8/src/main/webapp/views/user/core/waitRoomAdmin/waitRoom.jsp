@@ -44,19 +44,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 						<th class="head1">姓名</th>
 						<th class="head1">性别</th>
 						<th class="head1">专业</th>
-						<th class="head1">面试考场</th>
+						<th class="head1">测试考场</th>
 					</tr>
 				</thead>
-				<tbody id="callingTabs">
-					<!-- <tr>
-						<td>1</td>
-						<td>43067676767</td>
-						<td>李四</td>
-						<td>男</td>
-						<td>软件技术</td>
-						<td>1504</td>
-					</tr> -->
-				</tbody>
+				<tbody id="callingTabs"></tbody>
 			</table>
 		</div
   	</div>

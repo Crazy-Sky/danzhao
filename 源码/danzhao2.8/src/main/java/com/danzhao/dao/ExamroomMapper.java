@@ -1,12 +1,12 @@
 package com.danzhao.dao;
 
-import com.danzhao.bean.Examroom;
-import com.danzhao.bean.ExamroomExample;
-import com.danzhao.dto.ExamroomDto;
-
 import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
+
+import com.danzhao.bean.Examroom;
+import com.danzhao.bean.ExamroomExample;
+import com.danzhao.dto.ExamroomDto;
 
 public interface ExamroomMapper {
     long countByExample(ExamroomExample example);
@@ -30,17 +30,17 @@ public interface ExamroomMapper {
     int updateByPrimaryKeySelective(Examroom record);
 
     int updateByPrimaryKey(Examroom record);
-    
-    //dto
-    
+
+    // dto
+
     ExamroomDto selectDtoByPrimaryKey(Integer erid);
-    
+
     List<ExamroomDto> selectErDtosByExample(ExamroomExample example);
-    
+
     List<ExamroomDto> selectErDtosByDept(int deptid);
-    
+
     List<ExamroomDto> selectErDtosByDeptAndType(Examroom examroom);
-    
+
     List<ExamroomDto> selectsByDeptAndType(Examroom examroom);
-    
+
 }
