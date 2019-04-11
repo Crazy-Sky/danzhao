@@ -1,6 +1,7 @@
 package com.danzhao.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Param;
 
@@ -53,6 +54,7 @@ public interface StudentMapper {
     
     //根据考场获取正在考试的学生
     StuInfoDto selectExamingStuByEr(Student student);
-
     
+    //根据条件获取学生成绩
+    List<Map<String,Object>> selectStuGradeByErIdAnDeptAndkType(@Param("erId") Integer erId, @Param("kType") String kType, @Param("deptid") Integer deptid);
 }

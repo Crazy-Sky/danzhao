@@ -9,26 +9,34 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.lang.reflect.InvocationTargetException;
 import java.net.URLEncoder;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.ResourceUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.danzhao.bean.Examroom;
 import com.danzhao.bean.Student;
 import com.danzhao.dto.StuAllInfoDto;
 import com.danzhao.dto.StuInfoDto;
 import com.danzhao.dto.UserDto;
 import com.danzhao.service.DeptService;
+import com.danzhao.service.ExamroomService;
 import com.danzhao.service.ProfService;
 import com.danzhao.service.StuService;
+import com.danzhao.util.ExcelModeUtils;
 
 @Controller
 @RequestMapping("student/")
@@ -43,6 +51,9 @@ public class StuManageController {
 	
 	@Autowired
 	DeptService deptService;
+	
+	@Autowired
+	ExamroomService examroomService;
 	
 	/**
 	 * @Description: TODO 导入学生 通过 jquery.form.js 插件提供的ajax方式上传文件 ,导入Excel
@@ -136,19 +147,31 @@ public class StuManageController {
     //导出考生成绩表
     @RequestMapping("/exportStuScoreExcel")
     @ResponseBody
-    public void exportStuScoreExcel(HttpServletRequest request,HttpServletResponse response, int erid) throws Exception{
+    public void exportStuScoreExcel(HttpServletRequest request,HttpServletResponse response, 
+    		@RequestParam(defaultValue = "-1") int erid, 
+    		@RequestParam(defaultValue = "") String kType, 
+    		@RequestParam(defaultValue = "-1") int deptid) throws Exception{
         response.reset(); //清除buffer缓存
 //        Map<String,Object> map=new HashMap<String,Object>();
         // 指定下载的文件名，浏览器都会使用本地编码，即GBK，浏览器收到这个文件名后，用ISO-8859-1来解码，然后用GBK来显示
         // 所以我们用GBK解码，ISO-8859-1来编码，在浏览器那边会反过来执行。
-        response.setHeader("Content-Disposition", "attachment;filename=students.xlsx");
+        System.out.println("exportStuScoreExcel: erid1==" + erid);
+        String lastFilename = "";
+        Examroom examroom = new Examroom();
+        examroom.setErid(-1);
+        if (erid != -1) {
+        	examroom = examroomService.selectOneExamroom(erid);
+        	lastFilename = examroom.getErname();
+        }else {
+        	lastFilename = deptService.selectOne(deptid).getProfclass();
+        }
+        lastFilename = URLEncoder.encode(lastFilename,"UTF-8");
+        response.setHeader("Content-Disposition", "attachment;filename=stuGrade-" + lastFilename + ".xlsx");
         response.setContentType("application/vnd.ms-excel;charset=UTF-8");
         response.setHeader("Pragma", "no-cache");
         response.setHeader("Cache-Control", "no-cache");
         response.setDateHeader("Expires", 0);
-        XSSFWorkbook workbook=null;
-        //导出Excel对象
-        workbook = stuService.exportStuScoreExcel(erid);
+        Workbook workbook =  stuService.exportStuScoreExcel(examroom, kType, deptid);
         OutputStream output;
         try {
             output = response.getOutputStream();

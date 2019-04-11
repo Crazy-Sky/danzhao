@@ -1,13 +1,16 @@
 package com.danzhao.service;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
+import com.danzhao.bean.Examroom;
 import com.danzhao.bean.Student;
 import com.danzhao.dto.ShowStuDto;
 import com.danzhao.dto.StuAllInfoDto;
@@ -23,7 +26,7 @@ public interface StuService {
 	public XSSFWorkbook exportStuSignatureExcel(int deptid);
 	
 	//导出考生成绩表
-	public XSSFWorkbook exportStuScoreExcel(int erid);
+	public Workbook exportStuScoreExcel(Examroom examroom, String kType, int deptid);
 	
 	public StuInfoDto selectOneDtoByStuNumber(String stuNumber);
 	
@@ -38,6 +41,8 @@ public interface StuService {
 //	public List<StuInfoDto> selectStuInfosByName(int deptid,String name);
 //	
 //	public List<StuInfoDto> selectStuInfosByProf(int deptid,String profname);
+	
+	public List<Map<String,Object>> selectStuGradeByErIdAnDeptAndkType(int erId, String kType, int deptid);
 	
 	public Student selectOneStu(int stuid);
 	
