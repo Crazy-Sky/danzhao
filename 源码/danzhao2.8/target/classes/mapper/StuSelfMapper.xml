@@ -250,4 +250,26 @@
    	where stuId = #{stuid,jdbcType=INTEGER}
   </select>
   
+  <select id="selectStuGradeByErIdAnDeptAndkType" resultType="java.util.HashMap">
+  	SELECT s.stuId , p.profName , s.examNumber , s.stuName , eg.Result ,eg.score
+ 	FROM d_student s
+    LEFT JOIN d_profession p
+    ON s.profid = p.profId
+    LEFT JOIN d_examinergrade eg
+    ON s.stuId = eg.stuid
+    LEFT JOIN d_examroom e
+    ON s.erId = e.erId
+    WHERE 
+    <if test="deptid == -1">
+    	s.erId = #{erId,jdbcType=INTEGER}
+    </if>
+    <if test="deptid != -1">
+    	<if test="kType != ''">
+	    	s.kType = #{kType,jdbcType=VARCHAR}
+	    	AND
+    	</if>
+	    s.deptid = #{deptid,jdbcType=INTEGER}
+    </if>
+  </select>
+  
 </mapper>

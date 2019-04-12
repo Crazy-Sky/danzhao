@@ -49,7 +49,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				</thead>
 				<tbody id="callingTabs"></tbody>
 			</table>
-		</div
+		</div>
   	</div>
   </body>
 </html>
