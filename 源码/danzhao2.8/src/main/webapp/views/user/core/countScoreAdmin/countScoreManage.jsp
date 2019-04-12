@@ -35,7 +35,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
        		   	</select>
         	   	<input type="button" id="selectExatedStuByTestTimeBt" value="确定">
         	   	<input type="button" onclick="reload()" value="刷新" />
-        	   	<input type="button" id="createScoreTabBt" value="生成当前考生成绩表" />
+        	   	<input type="button" id="createScoreTabBt" value="生成考生成绩表" />
             </div>
          	<table cellpadding="0" cellspacing="0" border="0" id="table2" class="stdtable stdtablecb">
 				<thead>
