@@ -34,8 +34,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
        		   <input type="radio" name="insertAccord" value="profname">专业&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
    	    	   <input type="text" name="insertAccordValue">
         	   <input type="submit" value="确定">
-        	   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-        	   <input type="button" id="createSignatureTableBt" value="生成考生签名表">
         	</form>
         </div>
          <table cellpadding="0" cellspacing="0" border="0" id="table2" class="stdtable stdtablecb">

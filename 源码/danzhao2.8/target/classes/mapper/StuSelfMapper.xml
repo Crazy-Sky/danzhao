@@ -185,6 +185,21 @@
    	
   </select>
   
+   <!-- 根据考场获取学生 -->
+  <select id="selectStusByErId"  resultMap="StudentInfoDtoResultMap">
+    select
+    <include refid="StudentInfo_Column_List" />
+    from d_student s
+    left join d_department d
+    on s.deptid = d.deptId 
+    left join d_profession p
+    on s.profid = p.profId
+    left join d_examroom e
+    on s.erid = e.erId
+    where s.erid = #{erid,jdbcType=INTEGER}
+    
+  </select>
+  
   <!-- 根据考场获取某状态范围、某考试时间段(如：上午候考、被呼叫的、考试的)的学生 -->
   <select id="selectStusByShowStuDto" parameterType="com.danzhao.dto.ShowStuDto" resultMap="StudentInfoDtoResultMap">
     select

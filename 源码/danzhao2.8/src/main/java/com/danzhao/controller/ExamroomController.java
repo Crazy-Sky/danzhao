@@ -45,11 +45,15 @@ public class ExamroomController {
         if (examroomService.selectIsErName(examroom) == 1) {
             return -1;
         }
-        List<String> testRoomLists = new ArrayList<String>();
-        for (int i = 0; i < testRoomList.length; i++) {
-            testRoomLists.add(testRoomList[i]);
+        if (examroom.getErtype() == 0 && testRoomList != null) { // 如果是测试考场
+
+            List<String> testRoomLists = new ArrayList<String>();
+            for (int i = 0; i < testRoomList.length; i++) {
+                testRoomLists.add(testRoomList[i]);
+            }
+            examroom.setTestRoomList(StringUtil.listToString(testRoomLists));
         }
-        examroom.setTestRoomList(StringUtil.listToString(testRoomLists));
+
         message = examroomService.insertOneExamroom(examroom);
         return message;
     }
@@ -59,7 +63,9 @@ public class ExamroomController {
     public ExamroomDto selectOneErDto(HttpServletRequest request, HttpServletResponse response, int erid)
         throws IllegalAccessException, InvocationTargetException {
         ExamroomDto examroomDto = examroomService.selectExamroomDtoByPrimary(erid);
-        examroomDto.settestRoomLists(StringUtil.StringToList(examroomDto.gettestRoomList()));
+        if (examroomDto.gettestRoomList() != null) {
+            examroomDto.settestRoomLists(StringUtil.StringToList(examroomDto.gettestRoomList()));
+        }
         return examroomDto;
     }
 
@@ -125,16 +131,20 @@ public class ExamroomController {
         @RequestParam(value = "nowPage", defaultValue = "1") int nowPage,
         @RequestParam(value = "pageSize", defaultValue = "10") int pageSize)
         throws IllegalAccessException, InvocationTargetException {
-        List<ExamroomDto> examroomDtos = examroomService.selectErDtosByDept(deptid);
-        // 解析专业id字符串 并将id字符串转化为name
-        for (ExamroomDto examroomDto : examroomDtos) {
-            List<String> testRoomListNames = new ArrayList<String>();
-            examroomDto.settestRoomLists(StringUtil.StringToList(examroomDto.gettestRoomList()));
-            for (String id : examroomDto.gettestRoomLists()) {
-                Examroom examroom = examroomService.selectOneExamroom(Integer.parseInt(id));
-                testRoomListNames.add(examroom.getErname());
+        List<ExamroomDto> result = examroomService.selectErDtosByDept(deptid);
+        List<ExamroomDto> examroomDtos = new ArrayList<ExamroomDto>();
+        // 解析字符串 并将考场id字符串转化为name
+        for (ExamroomDto examroomDto : result) {
+            if (examroomDto.gettestRoomList() != null) {
+                List<String> testRoomListNames = new ArrayList<String>();
+                examroomDto.settestRoomLists(StringUtil.StringToList(examroomDto.gettestRoomList()));
+                for (String id : examroomDto.gettestRoomLists()) {
+                    ExamroomDto examroom = examroomService.selectExamroomDtoByPrimary(Integer.parseInt(id));
+                    testRoomListNames.add(examroom.getErname());
+                }
+                examroomDto.settestRoomListsNames(testRoomListNames);
             }
-            examroomDto.settestRoomListsNames(testRoomListNames);
+            examroomDtos.add(examroomDto);
         }
         return examroomDtos;
     }
@@ -147,11 +157,15 @@ public class ExamroomController {
         if (examroomService.selectIsErName(examroom) == 1) {
             return -1;
         }
-        List<String> testRoomLists = new ArrayList<String>();
-        for (int i = 0; i < testRoomList.length; i++) {
-            testRoomLists.add(testRoomList[i]);
+        if (examroom.getErtype() == 0) { // 如果是测试考场
+            List<String> testRoomLists = new ArrayList<String>();
+            if (testRoomList != null) {
+                for (int i = 0; i < testRoomList.length; i++) {
+                    testRoomLists.add(testRoomList[i]);
+                }
+            }
+            examroom.setTestRoomList(StringUtil.listToString(testRoomLists));
         }
-        examroom.setTestRoomList(StringUtil.listToString(testRoomLists));
         message = examroomService.updateOneExamroom(examroom);
         return message;
     }

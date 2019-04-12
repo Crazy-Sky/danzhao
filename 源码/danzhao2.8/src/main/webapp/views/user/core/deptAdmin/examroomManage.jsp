@@ -33,14 +33,13 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	        		<option value="1" >测试考场</option>
 	        	</select>
 	        	<input type="text" name="ername" check="required" placeholder="考场名称">
+	        	
+		        <input type="submit" value="添加考场">
 	        </div>
 	        <div class="form_group insertTestRoom" >
-	            <label>选择对应测试考场:&emsp;</label>
-	            <div class="inline" id="testRoomIdsDiv"></div>
-	        </div>
-	        <div class="form_group">
-	        	<input type="submit" value="添加考场">
-	        </div>
+		            <label>选择对应测试考场:&emsp;</label>
+		            <div class="inline" id="testRoomIdsDiv"></div>
+		     </div>
     	</form>
         <table cellpadding="0" cellspacing="0" border="0" id="table2" class="stdtable stdtablecb">
 			<thead>
@@ -48,7 +47,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					<th class="head1">编号</th>
 					<th class="head1">考场名称</th>
 					<th class="head1">考场类型</th>
-					<th class="head1">考试专业</th>
+					<th class="head1">对应测试考场</th>
 					<th class="head1">考场负责人</th>
 					<th class="head1">操作</th>
 				</tr>

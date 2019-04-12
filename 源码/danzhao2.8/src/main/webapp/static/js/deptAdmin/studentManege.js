@@ -15,10 +15,7 @@ $(function() {
 		}
 			
 	});
-	
-	$("#createSignatureTableBt").click(function() {
-		window.location.href="student/exportStuSignatureExcel";
-	});
+
 	
 });
 //------------------------------------------------------

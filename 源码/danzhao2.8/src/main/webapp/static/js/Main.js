@@ -108,10 +108,15 @@ function selectErsByDeptAndTypeInInCheckbox (testRoomLists,deptid,ertype) {
         dataType: "json",
         success: function (message) {
 			testRoomLists.empty();
-			for(var i=0;i<message.length;i++){  
-				testRoomLists.append("<label>"+message[i].ername+"：<input type='checkbox' name='testRoomList' " +
-						"value='"+message[i].erid+"'></label>&emsp;&emsp;");
+			if(message.length == 0){
+				testRoomLists.append("<label>暂无考场</label>");
+			}else{
+				for(var i=0;i<message.length;i++){  
+					testRoomLists.append("<label>"+message[i].ername+"：<input type='checkbox' name='testRoomList' " +
+							"value='"+message[i].erid+"'></label>&emsp;&emsp;");
+				}
 			}
+			
         },
         error: function () {
 			alert("获取测试考场失败！");
@@ -224,6 +229,7 @@ function saveExamroom (insertExamroomForm,url) {
 
 //点击修改考场按钮
 function goUpdateExamroom(erid) {
+	
 	$.ajax({
             async: false,
             type: "post",
@@ -237,10 +243,16 @@ function goUpdateExamroom(erid) {
 				$("#updateExamroomForm input[name='erid']").val(erDto.erid);
 				$("#updateExamroomForm input[name='ername']").val(erDto.ername);
 				$("#updateExamroomForm select[name='ertype']").val(erDto.ertype);
-				var profs = erDto.proflists;
+				var testRoomLists = erDto.testRoomLists;
 //				alert(profs.length);
-				for (var i = 0; i < profs.length; i++) {
-					$("#updateProfidsDiv input[name='profids'][value='"+profs[i]+"']").attr("checked", true);
+				for (var i = 0; i < testRoomLists.length; i++) {
+					$("#updatetestRoomIdsDiv input[name='testRoomList'][value='"+testRoomLists[i]+"']").attr("checked", true);
+				}
+				var ertype = erDto.ertype;
+				if(ertype == 0){
+					$(".updateTestRoom").show();
+				}else{
+					$(".updateTestRoom").hide();
 				}
 				
 			},
@@ -249,6 +261,7 @@ function goUpdateExamroom(erid) {
 				return ;
             }
 	});
+	
 	showModal();
 }
 

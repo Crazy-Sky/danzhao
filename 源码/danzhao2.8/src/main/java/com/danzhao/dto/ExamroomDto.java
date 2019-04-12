@@ -1,5 +1,6 @@
 package com.danzhao.dto;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ExamroomDto {
@@ -16,9 +17,9 @@ public class ExamroomDto {
 
     private String testRoomList;
 
-    private List<String> testRoomLists;
+    private List<String> testRoomLists = new ArrayList<String>();
 
-    private List<String> testRoomListsNames;
+    private List<String> testRoomListsNames = new ArrayList<String>();
 
     private Integer userid;
 

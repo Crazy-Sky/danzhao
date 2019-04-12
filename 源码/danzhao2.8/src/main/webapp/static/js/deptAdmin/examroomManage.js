@@ -10,7 +10,8 @@ $(function() {
 	selectErsByDeptAndTypeInInCheckbox($("#updatetestRoomIdsDiv"),$("#deptid").val(),1);
 	
 	$("#insertExamroom").change(function() {
-		if($(this).value == 0){ //侯考场
+		var status = $(this).val();
+		if(status == 0){ //侯考场
 			$(".insertTestRoom").show();
 		}else{
 			$(".insertTestRoom").hide();
@@ -18,7 +19,8 @@ $(function() {
 	});
 	
 	$("#updateExamroom").change(function() {
-		if($(this).value == 0){ //侯考场
+		var status = $(this).val();
+		if(status == 0){ //侯考场
 			$(".updateTestRoom").show();
 		}else{
 			$(".updateTestRoom").hide();
@@ -38,12 +40,15 @@ $(function() {
 	// 修改考场
 	$("#updateExamroomForm").checkForm();
 	$("#updateExamroomForm").submit(function(){
+		
 		saveExamroom($("#updateExamroomForm"),"examroom/updateOneEr");
 	});
 	
 	
 	
 });
+
+// 
 
 //------------------------------------------------
 function selectErDtosByDeptPaging(nowPage) {
@@ -77,20 +82,32 @@ function selectErDtosByDeptPaging(nowPage) {
 				for(var i=0;i<erDtos.length;i++){  
 					//类型
 					var ertypeText = "";
+					// 操作
+					var operationUrl = "";
+					var operationName = "";
 					if(erDtos[i].ertype == 0){
 						ertypeText = "候考考场";
+						operationUrl = "student/exportWaitErStusInExcel?erid="+erDtos[i].erid;
+						operationName = "导出考生信息表";
 					}else if(erDtos[i].ertype == 1){
 						ertypeText = "测试考场";
+						operationUrl = "student/exportStuSignatureExcel?erid="+erDtos[i].erid;
+						operationName = "导出考生签名表";
 					}
-					//专业
+					//测试考场
 					var testRoomNames = "";
-					var testRoomNameLists = erDtos[i].testRoomNames;
-					for (var j = 0; j < testRoomNameLists.length;j++) {
-						testRoomNames += testRoomNameLists[j];
-						if(j < testRoomNameLists.length-1){
-							testRoomNames += " | ";
+					var testRoomNameLists = erDtos[i].testRoomListsNames;
+					if(testRoomNameLists.length == 0){
+						testRoomNames = "暂无";
+					}else{
+						for (var j = 0; j < testRoomNameLists.length;j++) {
+							testRoomNames += testRoomNameLists[j];
+							if(j < testRoomNameLists.length-1){
+								testRoomNames += " | ";
+							}
 						}
 					}
+					
 					//编号
 					var num = i+1;
 					//考官
@@ -106,6 +123,7 @@ function selectErDtosByDeptPaging(nowPage) {
 							'<td>'+testRoomNames+'</td>'+
 							'<td>'+username+'</td>'+
 							"<td class='center'>"+
+							"<a href='"+operationUrl+"'>"+operationName+"</a> | " +
 							"<a href='javascript:void(0);' onclick='goUpdateExamroom("+erDtos[i].erid+")'>修改</a> | " +
 							"<a href='javascript:void(0)' onclick=\"deleteOne('" + erDtos[i].erid + "','examroom')\">删除</a>" +
 							"</td>"+

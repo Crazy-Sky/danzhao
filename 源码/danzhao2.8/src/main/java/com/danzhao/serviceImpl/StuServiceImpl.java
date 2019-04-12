@@ -25,6 +25,7 @@ import com.danzhao.bean.Student;
 import com.danzhao.bean.StudentExample;
 import com.danzhao.dao.StudentMapper;
 import com.danzhao.dto.ExaminerGradeDto;
+import com.danzhao.dto.ExamroomDto;
 import com.danzhao.dto.ShowStuDto;
 import com.danzhao.dto.StuAllInfoDto;
 import com.danzhao.dto.StuInfoDto;
@@ -36,6 +37,7 @@ import com.danzhao.service.ProfService;
 import com.danzhao.service.StuService;
 import com.danzhao.util.DatetimeUtil;
 import com.danzhao.util.ExcelUtils;
+import com.danzhao.util.StringUtil;
 
 @Service
 public class StuServiceImpl implements StuService {
@@ -187,9 +189,7 @@ public class StuServiceImpl implements StuService {
     public XSSFWorkbook exportStuSignatureExcel(int erid) {
         // TODO excel导出
         // 根据条件查询数据，把数据装载到一个list中
-        StuInfoDto search = new StuInfoDto();
-        search.setErid(erid);
-        List<StuInfoDto> list = this.selectStusByDeptAndNameOrProf(search);
+        List<StuInfoDto> list = this.selectStusByErId(erid);
         for (int i = 0; i < list.size(); i++) {
             StuInfoDto stuInfoDto = list.get(i);
             stuInfoDto.setStuid(i + 1);
@@ -222,6 +222,61 @@ public class StuServiceImpl implements StuService {
             e.printStackTrace();
         }
         return xssfWorkbook;
+    }
+
+    // 导出考场学生信息
+    @Override
+    public XSSFWorkbook exportWaitErStusInExcel(int erid) {
+        // 查询此侯考场的学生
+        ExamroomDto examroomDto = examroomService.selectExamroomDtoByPrimary(erid);
+        List<StuInfoDto> list = new ArrayList<StuInfoDto>();
+        if (examroomDto.gettestRoomList() != null) {
+            examroomDto.settestRoomLists(StringUtil.StringToList(examroomDto.gettestRoomList()));
+            for (String testRoomId : examroomDto.gettestRoomLists()) {
+                List<StuInfoDto> tList = this.selectStusByErId(Integer.parseInt(testRoomId));
+                list.addAll(tList);
+            }
+        }
+
+        for (int i = 0; i < list.size(); i++) {
+            StuInfoDto stuInfoDto = list.get(i);
+            stuInfoDto.setStuid(i + 1);
+            if (stuInfoDto.getTesttime().equals("1")) {
+                stuInfoDto.setTesttime("上午");
+            } else if (stuInfoDto.getTesttime().equals("2")) {
+                stuInfoDto.setTesttime("下午");
+            } else if (stuInfoDto.getTesttime().equals("3")) {
+                stuInfoDto.setTesttime("晚上");
+            }
+            list.set(i, stuInfoDto);
+        }
+        List<ExcelBean> excel = new ArrayList<ExcelBean>();
+        Map<Integer, List<ExcelBean>> map = new LinkedHashMap<Integer, List<ExcelBean>>();
+        XSSFWorkbook xssfWorkbook = null;
+        // 设置标题栏
+        excel.add(new ExcelBean("序号", "stuid", 0));
+        excel.add(new ExcelBean("准考证号", "examnumber", 0));
+        excel.add(new ExcelBean("考生号", "stunumber", 0));
+        excel.add(new ExcelBean("考生姓名", "stuname", 0));
+        excel.add(new ExcelBean("考生身份证号码", "idcard", 0));
+        excel.add(new ExcelBean("专业大类", "profclass", 0));
+        excel.add(new ExcelBean("报考专业", "profname", 0));
+        excel.add(new ExcelBean("侯考场", "ername", 0));
+        excel.add(new ExcelBean("考试时间", "testtime", 0));
+        // ------------------------------
+        // 手动在mapper添加查询多表的方法 创建新dto类
+
+        map.put(0, excel);
+        String sheetName = "候考室学生信息表";
+        // 调用ExcelUtil的方法
+        try {
+            xssfWorkbook = ExcelUtils.createExcelFile(StuInfoDto.class, list, map, sheetName);
+        } catch (Exception e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        return xssfWorkbook;
+
     }
 
     // 成绩表
@@ -419,6 +474,11 @@ public class StuServiceImpl implements StuService {
         // 将密码设置成准考证号
         student.setStupwd(student.getExamnumber());
         return studentMapper.insertSelective(student);
+    }
+
+    @Override
+    public List<StuInfoDto> selectStusByErId(int erid) {
+        return studentMapper.selectStusByErId(erid);
     }
 
 }

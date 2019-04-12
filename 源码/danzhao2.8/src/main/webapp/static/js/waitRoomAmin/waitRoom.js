@@ -2,7 +2,6 @@ $(function() {
 	
 	var erid = $("#erid").val();
 	var callingTabs = $("#callingTabs");
-//	alert(erid);
 	
 	// 获取正在被呼叫的考生
 	$.ajax({
