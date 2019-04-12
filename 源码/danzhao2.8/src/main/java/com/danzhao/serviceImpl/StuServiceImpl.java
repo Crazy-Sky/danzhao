@@ -30,6 +30,7 @@ import com.danzhao.bean.StudentExample;
 import com.danzhao.dao.StudentMapper;
 import com.danzhao.dto.ExaminerGradeDto;
 import com.danzhao.dto.ExamroomDto;
+import com.danzhao.dto.FinishExatStuDto;
 import com.danzhao.dto.ShowStuDto;
 import com.danzhao.dto.StuAllInfoDto;
 import com.danzhao.dto.StuInfoDto;
@@ -242,10 +243,10 @@ public class StuServiceImpl implements StuService {
                 list.addAll(tList);
             }
         }
-
         for (int i = 0; i < list.size(); i++) {
             StuInfoDto stuInfoDto = list.get(i);
             stuInfoDto.setStuid(i + 1);
+            stuInfoDto.setWaitRoom(examroomDto.getErname());
             if (stuInfoDto.getTesttime().equals("1")) {
                 stuInfoDto.setTesttime("上午");
             } else if (stuInfoDto.getTesttime().equals("2")) {
@@ -266,7 +267,7 @@ public class StuServiceImpl implements StuService {
         excel.add(new ExcelBean("考生身份证号码", "idcard", 0));
         excel.add(new ExcelBean("专业大类", "profclass", 0));
         excel.add(new ExcelBean("报考专业", "profname", 0));
-        excel.add(new ExcelBean("侯考场", "ername", 0));
+        excel.add(new ExcelBean("侯考场", "waitRoom", 0));
         excel.add(new ExcelBean("考试时间", "testtime", 0));
         // ------------------------------
         // 手动在mapper添加查询多表的方法 创建新dto类
@@ -523,5 +524,18 @@ public class StuServiceImpl implements StuService {
     public List<StuInfoDto> selectStusByErId(int erid) {
         return studentMapper.selectStusByErId(erid);
     }
+
+	@Override
+	public List<StuInfoDto> selectWaitCallingStuDtos(ShowStuDto showStuDto) {
+		if(showStuDto.getErid() == 0 || showStuDto.getTesttime() == 0) {
+			return new ArrayList<StuInfoDto>();
+		}
+		return studentMapper.selectWaitCallingStuDtos(showStuDto);
+	}
+
+	@Override
+	public Integer queryFinishExatStuCount(FinishExatStuDto finishExatStuDto) {
+		return studentMapper.queryFinishExatStuCount(finishExatStuDto);
+	}
 
 }

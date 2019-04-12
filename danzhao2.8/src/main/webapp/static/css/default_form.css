@@ -1,0 +1,155 @@
+input[type=text],
+input[type=email],
+input[type=password] {
+    padding: 8px 0;
+    border: 1px solid #ccc;
+    -moz-border-radius: 2px;
+    -webkit-border-radius: 2px;
+    border-radius: 2px;
+    vertical-align: middle;
+    -moz-box-shadow: inset 0 1px 3px #ddd;
+    -webkit-box-shadow: inset 0 1px 3px #ddd;
+    box-shadow: inset 0 1px 3px #ddd;
+    color: #666;
+    text-indent: 10px;
+}
+input[type=submit],
+input[type=button] {
+    margin: 0;
+    font-weight: bold;
+    color: #eee;
+    background: #1296db;
+    border: 1px solid #1296db;
+    padding: 7px 10px;
+    -moz-box-shadow: none;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+    cursor: pointer;
+    -moz-border-radius: 2px;
+    -webkit-border-radius: 2px;
+    border-radius: 2px;
+}
+select {
+    padding: 8px 0;
+    border: 1px solid #ccc;
+    -moz-border-radius: 2px;
+    -webkit-border-radius: 2px;
+    border-radius: 2px;
+    vertical-align: middle;
+    -moz-box-shadow: inset 0 1px 3px #ddd;
+    -webkit-box-shadow: inset 0 1px 3px #ddd;
+    box-shadow: inset 0 1px 3px #ddd;
+    color: #666;
+    text-indent: 10px;
+}
+.default_form > div {
+	margin-top: 20px;
+	margin-bottom: 10px;
+}
+.default_form > div span {
+	float: left;
+	font-size: 16px;
+	width: 100px;	
+}
+.default_form textarea{
+    resize: none;
+    overflow: auto;
+    min-height: 21px;
+    border: 1px solid #dbdbdb;
+    padding: 2px 5px;
+    color: #666666;
+    font-size: 14px;
+    line-height: 1.4;
+    vertical-align: bottom;
+}
+.default_form input[type=text]:focus, 
+.default_form input[type=password]:focus,
+.default_form textarea:focus {
+	border: 1px solid #5693ef; 
+}
+.default_form input[type=button]{
+	width: 80px;
+	height: 40px;
+	margin: 0 20px;
+	background-color: #1296db; 
+	border: 1px solid #1296db; 
+	border-radius: 5px;
+	color: #fff;
+}
+.default_form input[type=button]:last-child{
+	background-color: #f4b504; 
+	border: 1px solid #f4b504; 
+}
+.form_group{
+	margin-bottom: 20px;
+	/* float: left; */
+}
+.form_group .grade tr td:first-child {
+    text-align: center;
+}
+.form_group .grade tr td:last-child{
+	text-align: center;
+	width: 50%;
+}
+.form_group .grade tr td{
+	border: 1px solid #eee;
+}
+.form_group .grade tr th{
+	border: 1px solid #eee;
+}
+
+.form_group_1{
+	height: 40px;
+	margin-bottom: 20px;
+}
+.form_group_2{
+	height: 60px;
+	margin-bottom: 5px;
+}
+.form_group_2 input[type=button]{
+	width: 100%;
+	height: 50px;
+	font-size: 25px;
+}
+.pf{
+	text-align: center;
+	width: 100%;
+	height: 40px;
+	margin-top: 5px;
+	border-bottom: 1px solid #eee;
+}
+.form_control{
+	width: 100%;
+}
+.form_button{
+	width: 100%;
+	background-color: #1296db;
+	border: 1px solid #1296db;
+	color: #fff;
+	padding: 6px 12px;
+	border-radius: 5px;
+	margin: 0 5px;
+}
+
+.form_code{
+	width: 30%;
+}
+.form_select{
+	width: 30%;
+}
+
+/*默认表格格式  */
+.default_table{
+	width: 300px; 
+	height: 50px;
+}
+.default_table tr td input[type=text], 
+.default_table tr td input[type=password], 
+.default_table tr td select{
+	width: 100%;
+}
+.default_table tr td input[type=submit]{
+	width: 100px;
+	float: left;
+	margin-top: 10px;
+}

@@ -25,6 +25,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.danzhao.bean.Examroom;
 import com.danzhao.bean.Student;
+import com.danzhao.dto.FinishExatStuDto;
 import com.danzhao.dto.StuAllInfoDto;
 import com.danzhao.dto.StuInfoDto;
 import com.danzhao.dto.UserDto;
@@ -141,7 +142,7 @@ public class StuManageController {
             e.printStackTrace();
         }
     }
-
+    
     // 导出侯考场考生信息表
     /**
      * 
@@ -307,4 +308,23 @@ public class StuManageController {
         return stuService.deleteOne(id);
     }
 
+    /**
+     * 
+    * @Title: queryFinishExatStuCount  
+    * @Description: (查看已经完成考试的人)  
+    * @param @param finishExatStuDto
+    * @param @return  
+    * @return int    
+    * @throws
+     */
+    @RequestMapping("queryFinishExatStuCount")
+    @ResponseBody
+    public int queryFinishExatStuCount(FinishExatStuDto finishExatStuDto) {
+    	if(finishExatStuDto == null) {
+    		finishExatStuDto = new FinishExatStuDto();
+    	}
+        return stuService.queryFinishExatStuCount(finishExatStuDto);
+    }
+
+    
 }

@@ -52,6 +52,16 @@ public class StuInfoDto {
     
     private String signature;
     
+    private String waitRoom;
+    
+	public String getWaitRoom() {
+		return waitRoom;
+	}
+
+	public void setWaitRoom(String waitRoom) {
+		this.waitRoom = waitRoom;
+	}
+
 	public String getProfclass() {
 		return profclass;
 	}

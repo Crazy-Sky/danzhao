@@ -147,6 +147,7 @@
     <if test="profname != null">
     	and p.profName like CONCAT('%',#{profname},'%')
     </if>
+    order by s.stuId asc
   </select>
   
   <!-- 根据专业获取某状态(如:正在被呼叫)的学生 -->
@@ -162,6 +163,7 @@
     on s.erid = e.erId
    	where s.profid = #{profid,jdbcType=INTEGER} 
    	and s.stuStatus = #{stustatus,jdbcType=INTEGER}
+   	order by s.stuId asc
   </select>
   
   
@@ -182,7 +184,7 @@
     	and s.testTime = #{testtime,jdbcType=INTEGER}
     </if>
    	and s.stuStatus = #{stustatus,jdbcType=INTEGER} 
-   	
+   	order by s.stuId asc
   </select>
   
    <!-- 根据考场获取学生 -->
@@ -197,7 +199,7 @@
     left join d_examroom e
     on s.erid = e.erId
     where s.erid = #{erid,jdbcType=INTEGER}
-    
+    order by s.stuId asc
   </select>
   
   <!-- 根据考场获取某状态范围、某考试时间段(如：上午候考、被呼叫的、考试的)的学生 -->
@@ -215,6 +217,44 @@
    	and s.stuStatus &gt;= #{beginState,jdbcType=INTEGER}
    	and s.stuStatus &lt;= #{endState,jdbcType=INTEGER}
    	and s.testTime = #{testtime,jdbcType=INTEGER}
+   	order by s.stuId asc
+  </select>
+  
+  <!-- 查某测试考场某个时间段正在备考的三个考生 -->
+  <select id="selectWaitCallingStuDtos" parameterType="com.danzhao.dto.ShowStuDto" resultMap="StudentInfoDtoResultMap">
+    select
+    <include refid="StudentInfo_Column_List" />
+    from d_student s
+    left join d_department d
+    on s.deptid = d.deptId 
+    left join d_profession p
+    on s.profid = p.profId
+    left join d_examroom e
+    on s.erid = e.erId
+   	where s.erid = #{erid,jdbcType=INTEGER} 
+   	and s.stuStatus 0
+   	and s.testTime = #{testtime,jdbcType=INTEGER}
+   	order by s.stuId asc
+   	limit 0, 3
+  </select>
+  
+    <!-- 查询完成考试的考生数量-->
+  <select id="queryFinishExatStuCount" parameterType="com.danzhao.dto.FinishExatStuDto" resultMap="java.lang.Integer">
+    select count(1)
+    from d_student s
+    left join d_department d
+    on s.deptid = d.deptId 
+    left join d_profession p
+    on s.profid = p.profId
+    left join d_examroom e
+    on s.erid = e.erId
+   	where s.stuStatus = 5
+   	<if test="deptId != 0">
+   		and s.deptid = #{deptId}
+   	</if>
+   	<if test="erId != 0">
+   		and s.erid = #{erId}
+   	</if>
   </select>
   
   <!-- 根据考场获取可评分的学生 -->
@@ -230,6 +270,7 @@
     on s.erid = e.erId
    	where s.erid = #{erid,jdbcType=INTEGER} 
    	and s.stuStatus = 2 or s.stuStatus = 3
+   	order by s.stuId asc
   </select>
   
   <!-- 根据id查询单个stuAllInfoDto -->
@@ -248,6 +289,7 @@
 	LEFT JOIN d_examination et2
 	on s.exatid2 = et2.exatId
    	where stuId = #{stuid,jdbcType=INTEGER}
+   	order by s.stuId asc
   </select>
   
   <select id="selectStuGradeByErIdAnDeptAndkType" resultType="java.util.HashMap">

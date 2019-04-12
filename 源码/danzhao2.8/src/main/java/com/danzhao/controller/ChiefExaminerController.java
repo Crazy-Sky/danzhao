@@ -169,4 +169,13 @@ public class ChiefExaminerController {
         return studentInfoDtos;
     }
 
+    @RequestMapping("changeTestTime")
+    public void changeTestTime(HttpSession session,int testtime) {
+    	ServletContext application = session.getServletContext();
+    	if(testtime == 0) {
+    		testtime = 1;
+    	}
+    	application.setAttribute("testtime", testtime);
+    }
+    
 }

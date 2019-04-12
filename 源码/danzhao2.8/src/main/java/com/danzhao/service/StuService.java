@@ -12,6 +12,7 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 import com.danzhao.bean.Examroom;
 import com.danzhao.bean.Student;
+import com.danzhao.dto.FinishExatStuDto;
 import com.danzhao.dto.ShowStuDto;
 import com.danzhao.dto.StuAllInfoDto;
 import com.danzhao.dto.StuInfoDto;
@@ -60,6 +61,12 @@ public interface StuService {
     // 根据考场获取某状态范围、某考试时间段(如：上午候考、被呼叫的、考试的)的学生
     public List<StuInfoDto> selectStusByShowStuDto(ShowStuDto showStuDto);
 
+    // 查某测试考场某个时间段正在备考的三个考生
+    public List<StuInfoDto> selectWaitCallingStuDtos(ShowStuDto showStuDto);
+    
+    //查询完成考试的考生数量
+    public Integer queryFinishExatStuCount(FinishExatStuDto finishExatStuDto);
+    
     // 根据考场获取学生
     public List<StuInfoDto> selectStusByErId(int erid);
 

@@ -1,10 +1,14 @@
 package com.danzhao.controller;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -13,6 +17,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.danzhao.bean.Examroom;
 import com.danzhao.bean.Student;
+import com.danzhao.dto.ShowStuDto;
 import com.danzhao.dto.StuInfoDto;
 import com.danzhao.service.ExamroomService;
 import com.danzhao.service.StuService;
@@ -98,24 +103,39 @@ public class WaitRoomController {
      */
     @RequestMapping("getCallingStu")
     @ResponseBody
-    public List<StuInfoDto> getCallingStu(HttpServletRequest request, HttpServletResponse response, int erid) {
-        // 根据考场号获取其中的专业
-        Examroom examroom = examroomService.selectOneExamroom(erid);
+    public Map<String, List<StuInfoDto>> getCallingStu(HttpSession session,ShowStuDto request) {
+        // 根据考场号获取其所属测试考生
+    	Map<String, List<StuInfoDto>> map = new HashMap<String, List<StuInfoDto>>();
+        Examroom examroom = examroomService.selectOneExamroom(request.getErid());
         List<String> testRoomList = StringUtil.StringToList(examroom.getTestRoomList());
         List<StuInfoDto> studentInfoDtos = new ArrayList<StuInfoDto>();
-        // 获取每个专业中正在被呼叫的学生
+        ServletContext application = session.getServletContext();
+        // 获取每个候考室中正在被呼叫的学生
         Student student = new Student();
+        ShowStuDto showStuDto = new ShowStuDto();
+        List<StuInfoDto> callingStus = new ArrayList<StuInfoDto>();
+        List<StuInfoDto> waitCallingStus = new ArrayList<StuInfoDto>();
         for (String testRoom : testRoomList) {
-            int testRoomId = Integer.parseInt(testRoom);
-            // application.setAttribute("exam_"+erid+"prof_"+profid, 0);
-            student.setErid(testRoomId);
-            student.setStustatus(1);
-            List<StuInfoDto> studentInfoDtos2 = stuService.selectStusByErIdAndState(student);
-            if (studentInfoDtos2.size() > 0) {
-                studentInfoDtos.addAll(studentInfoDtos2);
-            }
+        	if(testRoom != null) {
+        		int testRoomId = Integer.parseInt(testRoom);
+                student.setErid(testRoomId);
+                student.setStustatus(1);
+                callingStus = stuService.selectStusByErIdAndState(student);
+                if (callingStus.size() > 0 && waitCallingStus != null) {
+                    studentInfoDtos.addAll(callingStus);
+                }
+                // 获取备考考生
+                showStuDto.setErid(testRoomId);
+                showStuDto.setTesttime((Integer)application.getAttribute("testtime"));
+                waitCallingStus = stuService.selectWaitCallingStuDtos(showStuDto);
+                if (waitCallingStus.size() > 0 && waitCallingStus != null) {
+                    studentInfoDtos.addAll(callingStus);
+                }
+        	}
         }
-        return studentInfoDtos;
+        map.put("callingStu", callingStus);
+        map.put("waitCallingStu", waitCallingStus);
+        return map;
     }
 
     /**
@@ -130,14 +150,16 @@ public class WaitRoomController {
      * @return fileName
      */
     public String produceCallingStu(HttpServletRequest request, HttpServletResponse response, int erid) {
-        List<StuInfoDto> studentInfoDtos = this.getCallingStu(request, response, erid);
+        ShowStuDto showStuDto  = new ShowStuDto();
+        showStuDto.setErid(erid);
+    	Map<String, List<StuInfoDto>>  map = this.getCallingStu(showStuDto);
         System.out.print("当前呼叫的人：");
-        for (StuInfoDto stuInfoDto : studentInfoDtos) {
+        for (StuInfoDto stuInfoDto : map.get("callingStu")) {
             System.out.print(stuInfoDto.getStuname() + "\t");
         }
         System.out.println();
         CallingUtil callingUtil = new CallingUtil();
-        return callingUtil.produceWar(request, studentInfoDtos, erid);
+        return callingUtil.produceWar(request, map.get("callingStu"), erid);
     }
 
 }

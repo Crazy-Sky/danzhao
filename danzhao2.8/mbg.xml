@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration
+  PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+  "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+<generatorConfiguration>
+ 
+  <context id="DB2Tables" targetRuntime="MyBatis3">
+  
+  	<!-- 指定自动生成没有注释的文件 -->
+  	<commentGenerator>
+  		<property name="suppressAllComments" value="true"/>
+  	</commentGenerator>
+  	
+	<!-- 配置数据库连接信息 -->  
+    <jdbcConnection driverClass="com.mysql.jdbc.Driver"
+        connectionURL="jdbc:mysql:///db_danzhao"
+        userId="root"
+        password="root">
+    </jdbcConnection>
+
+    <javaTypeResolver >
+      <property name="forceBigDecimals" value="false" />
+    </javaTypeResolver>
+
+	<!-- 指定javaBean生成的位置 -->
+    <javaModelGenerator 
+    	targetPackage="com.danzhao.bean" 
+    	targetProject=".\src\main\java">
+      <property name="enableSubPackages" value="true" />
+      <property name="trimStrings" value="true" />
+    </javaModelGenerator>
+
+	<!-- 指定sql映射文件生成位置 -->
+    <sqlMapGenerator 
+    	targetPackage="mapper"  
+    	targetProject=".\src\main\resources">
+      <property name="enableSubPackages" value="true" />
+    </sqlMapGenerator>
+
+	<!-- 指定dao接口生成的位置，mapper接口 -->
+    <javaClientGenerator type="XMLMAPPER" 
+    	targetPackage="com.danzhao.dao"
+    	targetProject=".\src\main\java">
+      <property name="enableSubPackages" value="true" />
+    </javaClientGenerator>
+
+	<!-- 指定每个表的生成策略 -->
+	<!-- <table tableName="d_department" domainObjectName="Department" ></table>
+	<table tableName="d_examhistory" domainObjectName="Examhistory" ></table>
+	<table tableName="d_examination" domainObjectName="Examination" ></table> -->
+	<table tableName="d_examroom" domainObjectName="Examroom" ></table>
+	<!-- <table tableName="d_levelright" domainObjectName="Levelright" ></table>
+	<table tableName="d_profession" domainObjectName="Profession" ></table>
+	<table tableName="d_student" domainObjectName="Student" ></table> 
+	<table tableName="d_testright" domainObjectName="Testright"></table>
+	<table tableName="d_user" domainObjectName="User"></table>
+	<table tableName="d_role" domainObjectName="UserRole"></table>
+	<table tableName="d_menu" domainObjectName="UserMenu"></table>
+	<table tableName="d_email" domainObjectName="EmailBean"></table> -->
+	<!-- <table tableName="d_user" domainObjectName="User"></table>
+	<table tableName="d_student" domainObjectName="Student" ></table>
+	<table tableName="d_examinergrade" domainObjectName="ExaminerGrade"></table> -->
+	
+  </context>
+</generatorConfiguration>
