@@ -45,7 +45,7 @@ public class StuManageController {
 
     @Autowired
     DeptService deptService;
-    
+
     @Autowired
     ExamroomService examroomService;
 
@@ -102,7 +102,7 @@ public class StuManageController {
             e.printStackTrace();
         }
     }
-   
+
     // 导出考生签名表
     /**
      * 
@@ -119,7 +119,8 @@ public class StuManageController {
         // Map<String,Object> map=new HashMap<String,Object>();
         // 指定下载的文件名，浏览器都会使用本地编码，即GBK，浏览器收到这个文件名后，用ISO-8859-1来解码，然后用GBK来显示
         // 所以我们用GBK解码，ISO-8859-1来编码，在浏览器那边会反过来执行。
-        response.setHeader("Content-Disposition", "attachment;filename=students.xlsx");
+        String filename = URLEncoder.encode("考生签名表", "UTF-8");
+        response.setHeader("Content-Disposition", "attachment;filename=" + filename + ".xlsx");
         response.setContentType("application/vnd.ms-excel;charset=UTF-8");
         response.setHeader("Pragma", "no-cache");
         response.setHeader("Cache-Control", "no-cache");
@@ -141,7 +142,7 @@ public class StuManageController {
         }
     }
 
-    // 导出侯考场学生信息表
+    // 导出侯考场考生信息表
     /**
      * 
      * @param request
@@ -157,7 +158,8 @@ public class StuManageController {
         // Map<String,Object> map=new HashMap<String,Object>();
         // 指定下载的文件名，浏览器都会使用本地编码，即GBK，浏览器收到这个文件名后，用ISO-8859-1来解码，然后用GBK来显示
         // 所以我们用GBK解码，ISO-8859-1来编码，在浏览器那边会反过来执行。
-        response.setHeader("Content-Disposition", "attachment;filename=students.xlsx");
+        String filename = URLEncoder.encode("考场考生信息表", "UTF-8");
+        response.setHeader("Content-Disposition", "attachment;filename=" + filename + ".xlsx");
         response.setContentType("application/vnd.ms-excel;charset=UTF-8");
         response.setHeader("Pragma", "no-cache");
         response.setHeader("Cache-Control", "no-cache");
@@ -183,12 +185,11 @@ public class StuManageController {
     // 导出考生成绩表
     @RequestMapping("/exportStuScoreExcel")
     @ResponseBody
-    public void exportStuScoreExcel(HttpServletRequest request,HttpServletResponse response, 
-    		@RequestParam(defaultValue = "-1") int erid, 
-    		@RequestParam(defaultValue = "") String kType, 
-    		@RequestParam(defaultValue = "-1") int deptid) throws Exception{
-        response.reset(); //清除buffer缓存
-//        Map<String,Object> map=new HashMap<String,Object>();
+    public void exportStuScoreExcel(HttpServletRequest request, HttpServletResponse response,
+        @RequestParam(defaultValue = "-1") int erid, @RequestParam(defaultValue = "") String kType,
+        @RequestParam(defaultValue = "-1") int deptid) throws Exception {
+        response.reset(); // 清除buffer缓存
+        // Map<String,Object> map=new HashMap<String,Object>();
         // 指定下载的文件名，浏览器都会使用本地编码，即GBK，浏览器收到这个文件名后，用ISO-8859-1来解码，然后用GBK来显示
         // 所以我们用GBK解码，ISO-8859-1来编码，在浏览器那边会反过来执行。
         System.out.println("exportStuScoreExcel: erid1==" + erid);
@@ -196,18 +197,18 @@ public class StuManageController {
         Examroom examroom = new Examroom();
         examroom.setErid(-1);
         if (erid != -1) {
-        	examroom = examroomService.selectOneExamroom(erid);
-        	lastFilename = examroom.getErname();
-        }else {
-        	lastFilename = deptService.selectOne(deptid).getProfclass();
+            examroom = examroomService.selectOneExamroom(erid);
+            lastFilename = examroom.getErname();
+        } else {
+            lastFilename = deptService.selectOne(deptid).getProfclass();
         }
-        lastFilename = URLEncoder.encode(lastFilename,"UTF-8");
+        lastFilename = URLEncoder.encode(lastFilename, "UTF-8");
         response.setHeader("Content-Disposition", "attachment;filename=stuGrade-" + lastFilename + ".xlsx");
         response.setContentType("application/vnd.ms-excel;charset=UTF-8");
         response.setHeader("Pragma", "no-cache");
         response.setHeader("Cache-Control", "no-cache");
         response.setDateHeader("Expires", 0);
-        Workbook workbook =  stuService.exportStuScoreExcel(examroom, kType, deptid);
+        Workbook workbook = stuService.exportStuScoreExcel(examroom, kType, deptid);
         OutputStream output;
         try {
             output = response.getOutputStream();
